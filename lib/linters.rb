@@ -2,25 +2,20 @@ require_relative '../lib/prompter.rb'
 class Linters < Prompter
 include FileReader
 attr_reader :file_data,:open_bracket,:closing_bracket,
-:first_tag,:last_tag
+:first_tag,:last_tag,:matchs
   def initialize
     @file_data = file_data
-    @open_bracket = open_bracket
-    @closing_bracket = closing_bracket
+    @open_bracket = (/{/)
+    @closing_bracket = (/}/)
     @first_tag = first_tag
     @last_tag = last_tag
+    @matchs = matchs
   end
-    # @duplicate_open = (/{{/)
-    # @duplicate_close = (/}}/)
-   
+
     def tag_checker
-      @file_data = file_read
-      @open_bracket = (/{/)
-      @closing_bracket = (/}/)
-      @first_tag = @file_data.split('').values_at(0) 
-      @last_tag = @file_data.split('').values_at(-1) 
-      matchs = @file_data.scan(@open_bracket).size + @file_data.scan(@closing_bracket).size
-      
+      take_file_data
+      bracket_match_keeper
+      bracket_splitter
       if matchs.even? && matchs != 0
         prompt_message('passed')
       elsif matchs.odd? == true && matchs != 0
@@ -35,7 +30,13 @@ attr_reader :file_data,:open_bracket,:closing_bracket,
       end
     end
 
-    
+    def empty_rule_checker
+      
+      
+    end
+
+
+
 
 
 
