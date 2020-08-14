@@ -1,11 +1,9 @@
 #!/usr/bin/env ruby
 require_relative '../lib/file_reader.rb'
-require_relative '../lib/tag_lint.rb'
+require_relative '../lib/linters.rb'
 
-file = FileReader.new()
-obj = TagLint.new()
+lint = Linters.new()
 
-file.file_read
-file.file_split
-obj.count_tag
+lint.file_read
+lint.count_tag
 
