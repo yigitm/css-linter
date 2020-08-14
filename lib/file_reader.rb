@@ -1,4 +1,4 @@
-class FileReader
+module FileReader
 attr_reader :file,:file_read
   def initialize
     @file = file
@@ -7,20 +7,6 @@ attr_reader :file,:file_read
   
   def file_read
     @file_read = File.read("lint-style.css")
-    true
+    @file_read
   end
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 end
