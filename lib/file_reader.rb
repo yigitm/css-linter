@@ -1,5 +1,4 @@
 module FileReader
-attr_reader :file,:file_read
   def initialize
     @file = file
     @file_read = file_read
