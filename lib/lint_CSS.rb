@@ -1,4 +1,4 @@
-module FileReader
+module LintCSS
   
   def file_read
     @file_read = File.read("lint-style.css")
@@ -37,20 +37,19 @@ module FileReader
     end
   end
 
-
-
   def check_fill_or_not
     i = 0
     @indish_open.length.times do
       if @indish_close[i] - @indish_open[i] <= 1
         i += 1
-          prompt_message('failed')
-          prompt_lint('empty_rule')
+        prompt_message('failed')
+        prompt_lint('empty_rule')
         elsif @indish_close[i] - @indish_open[i] >= 2
           i += 1
           prompt_message('passed')
       end
     end
+    puts "hdehode"
   end
 
 

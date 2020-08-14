@@ -1,10 +1,11 @@
 #!/usr/bin/env ruby
-require_relative '../lib/file_reader.rb'
+require_relative '../lib/lint_CSS.rb'
 require_relative '../lib/linters.rb'
 
 lint = Linters.new()
 
-lint.tag_checker
+lint.bracket_checker
 lint.empty_rule_checker
+lint.important_tag_checker
 
 

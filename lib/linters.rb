@@ -1,6 +1,6 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
-include FileReader
+include LintCSS
 attr_reader :file_data,:open_bracket,:close_bracket,
 :first_bracket,:last_bracket,:matchs,:indish_open,:indish_close
   def initialize
@@ -14,7 +14,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     @indish_close = indish_close
   end
 
-    def tag_checker
+    def bracket_checker
       take_file_data
       bracket_match_keeper
       bracket_splitter
@@ -38,4 +38,10 @@ attr_reader :file_data,:open_bracket,:close_bracket,
       find_bracket_index
       check_fill_or_not
     end
+
+    def important_tag_checker
+      
+    end
+
+
 end
