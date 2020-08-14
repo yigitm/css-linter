@@ -42,7 +42,7 @@ require_relative '../lib/linters.rb'
         end
       end
     end
-    
+
     describe "#empty_rule_checker" do
       context "Checks content between openning & closing brackets and if content is empty" do
         it "It should returns 'failed' & 'emty_rule' message" do

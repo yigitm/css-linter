@@ -1,15 +1,17 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
 include FileReader
-attr_reader :file_data,:open_bracket,:closing_bracket,
-:first_tag,:last_tag,:matchs
+attr_reader :file_data,:open_bracket,:close_bracket,
+:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close
   def initialize
     @file_data = file_data
     @open_bracket = (/{/)
-    @closing_bracket = (/}/)
-    @first_tag = first_tag
-    @last_tag = last_tag
+    @close_bracket = (/}/)
+    @first_bracket = first_bracket
+    @last_bracket = last_bracket
     @matchs = matchs
+    @indish_open = indish_open
+    @indish_close = indish_close
   end
 
     def tag_checker
@@ -24,22 +26,16 @@ attr_reader :file_data,:open_bracket,:closing_bracket,
       elsif matchs == 0
         prompt_message('failed')
         prompt_lint('no_brackets')
-      elsif first_tag == ['{'] && last_tag == ['}'] && matchs.odd?
+      elsif first_bracket == ['{'] && last_bracket == ['}'] && matchs.odd?
         prompt_message('failed')
         prompt_lint('missing_brackets')
       end
     end
 
     def empty_rule_checker
-      
-      
+      take_file_data
+      string_to_array
+      find_bracket_index
+      check_fill_or_not
     end
-
-
-
-
-
-
-
-
 end
