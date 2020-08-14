@@ -38,6 +38,8 @@ module LintCSS
   end
 
   def check_fill_or_not
+    @indish_open = []
+    @indish_close = []
     i = 0
     @indish_open.length.times do
       if @indish_close[i] - @indish_open[i] <= 1
@@ -49,11 +51,6 @@ module LintCSS
           prompt_message('passed')
       end
     end
-    puts "hdehode"
   end
 
-
-  
-
-  
 end

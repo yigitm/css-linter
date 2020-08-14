@@ -10,7 +10,7 @@ require_relative '../lib/linters.rb'
     end
   end
 
-   describe Linters < Prompter do
+  describe Linters < Prompter do
     describe "#bracket_checker" do
       let(:lint) { Linters.new }
       context "Checks total brakects number if matchs sum is even & not zero" do
@@ -59,7 +59,21 @@ require_relative '../lib/linters.rb'
       end 
     end
 
+    describe "#important_tag_checker" do
+      let(:lint) { Linters.new }
+      context "Checks the count of !important tag & if count is MORE than 10" do
+        it "It should returns a warning message 'Over usage of '!important' - Recommended Limit: 9'" do
+          expect(lint.important_tag_checker).to eq(@failed)
+          expect(lint.important_tag_checker).to eq(@important_tag)
+        end
+      end
 
+      context "Checks the count of !important tag & if count is LESS than 10" do
+        it "It should returns 'passed' message" do
+          expect(lint.important_tag_checker).to eq(@passed)
+        end
+      end
+    end
   end
 
     

@@ -40,8 +40,15 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     end
 
     def important_tag_checker
-      
+      count_important = take_file_data.scan("!important").size
+      case count_important
+      when (0..9)
+        prompt_message('passed')
+      when (10..file_data.size)
+        prompt_message('failed')
+        prompt_lint('!important')
+      else
+        false
+      end
     end
-
-
 end
