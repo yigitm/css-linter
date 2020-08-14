@@ -4,5 +4,5 @@ require_relative '../lib/linters.rb'
 
 lint = Linters.new()
 
-lint.missing_tag_checker
+lint.tag_checker
 
