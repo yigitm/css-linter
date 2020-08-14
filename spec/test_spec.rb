@@ -11,36 +11,39 @@ require_relative '../lib/linters.rb'
   end
 
   describe Linters < Prompter do
-    let(:lint) { Linters.new }
-    context "Checks total brakects number if matchs sum is even & not zero" do
-      it "Should return 'passed' message" do
-        expect(lint.tag_checker).to eq(@passed)
+    describe "#tag_checker" do
+      let(:lint) { Linters.new }
+      context "Checks total brakects number if matchs sum is even & not zero" do
+        it "Should return 'passed' message" do
+          expect(lint.tag_checker).to eq(@passed)
+        end
       end
-    end
 
-    context "Checks total brakects number if matchs sum is odd & not zero" do
-      it "Should return 'failed' & 'missing_brackets' message" do
-        expect(lint.tag_checker).to eq(@failed)
-        expect(lint.tag_checker).to eq(@missing_brackets)
-      end
-    end
-
-    context "Checks total brakects number if no matches found" do
-      it "Should return 'failed' & 'no_brackets' message" do
-        expect(lint.tag_checker).to eq(@failed)
-        expect(lint.tag_checker).to eq(@no_brackets)
-      end
-    end
-
-    context "Checks the first & last regexes and matched pairs/(even numbers)" do
-      context "If first & last regex conditions are true but matchs sum is odd/(not pairs)" do
+      context "Checks total brakects number if matchs sum is odd & not zero" do
         it "Should return 'failed' & 'missing_brackets' message" do
-        expect(lint.tag_checker).to eq(@failed)
-        expect(lint.tag_checker).to eq(@missing_brackets)
+          expect(lint.tag_checker).to eq(@failed)
+          expect(lint.tag_checker).to eq(@missing_brackets)
+        end
+      end
+
+      context "Checks total brakects number if no matches found" do
+        it "Should return 'failed' & 'no_brackets' message" do
+          expect(lint.tag_checker).to eq(@failed)
+          expect(lint.tag_checker).to eq(@no_brackets)
+        end
+      end
+
+      context "Checks the first & last regexes and matched pairs/(even numbers)" do
+        context "If first & last regex conditions are true but matchs sum is odd/(not pairs)" do
+          it "Should return 'failed' & 'missing_brackets' message" do
+            expect(lint.tag_checker).to eq(@failed)
+            expect(lint.tag_checker).to eq(@missing_brackets)
+          end
         end
       end
     end
 
+    
   end
 
     
