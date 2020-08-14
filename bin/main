@@ -4,5 +4,5 @@ require_relative '../lib/linters.rb'
 
 lint = Linters.new()
 
-lint.count_tag
+lint.tag_checker
 

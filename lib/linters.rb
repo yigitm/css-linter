@@ -9,14 +9,16 @@ attr_reader :file_data,:open_bracket,:closing_bracket,:result
     @result = result
   end
   
-  def count_tag
+  def tag_checker
     @file_data = file_read
     @open_bracket = (/{/)
     @closing_bracket = (/}/)
-    if @open_bracket.match(@file_data).to_s == @open_bracket && @closing_bracket.match(@file_data).to_s == @closing_bracket
-       prompt_message('passed')
+    if @file_data.match(@open_bracket).to_s == "{" && @file_data.match(@closing_bracket).to_s == "}" 
+        prompt_message('passed')
+        true
     else
-       prompt_message('failed')
+        prompt_message('failed')
+        false
     end
   end
 end

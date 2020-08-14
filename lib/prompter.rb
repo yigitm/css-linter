@@ -10,9 +10,9 @@ class Prompter
     def prompt_message(message)
         case message 
         when 'passed'
-             puts @passed = "Tag Check Status: Passed" 
+              @passed = puts "Tag Check Status: Passed"
         when 'failed'
-             puts @failed = "Tag Check Status: Failed"
+              @failed = puts "Tag Check Status: Failed"
         else 
             "No message to display!"     
         end
