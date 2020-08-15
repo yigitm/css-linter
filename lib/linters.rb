@@ -76,10 +76,10 @@ attr_reader :file_data,:open_bracket,:close_bracket,
       dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
       property_array = regex_scanner(/\S*\w*:/)
 
-      if dry_array.length - property_array.length != 0
+      if find_length_difference(dry_array, property_array) != 0
         prompt_message('failed')
         prompt_lint('missing_semicolon')
-      elsif dry_array.length - property_array.length == 0
+      elsif find_length_difference(dry_array, property_array) == 0
         prompt_message('passed')
       end
     end

@@ -52,4 +52,9 @@ module LintCSS
     scanned_array
   end
 
+  def find_length_difference(array_one, array_two)
+    result = array_one.length - array_two.length
+    result
+  end
+
 end

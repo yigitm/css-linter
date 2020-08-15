@@ -96,7 +96,7 @@ require_relative '../lib/linters.rb'
         end
       end
 
-      context "If all semicolons are macthed" do
+      context "If syntax is correct" do
         it "It should returns 'passed' message" do
           expect(lint.property_name_checker).to eq(@passed)
         end
