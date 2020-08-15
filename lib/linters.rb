@@ -61,7 +61,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
 
     def dry_violation_checker
       take_file_data
-      dry_array = take_file_data.scan(/\S*\w*:/)
+      dry_array = take_file_data.scan(/\S*\w*\s\W*\w*;/)
 
       if dry_array == dry_array.uniq
         prompt_message('passed')
