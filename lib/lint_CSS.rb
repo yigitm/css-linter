@@ -47,4 +47,9 @@ module LintCSS
     end
   end
 
+  def regex_scanner(regex_variable)
+    scanned_array = take_file_data.scan(regex_variable)
+    scanned_array
+  end
+
 end

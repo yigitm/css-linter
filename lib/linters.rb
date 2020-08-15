@@ -73,8 +73,8 @@ attr_reader :file_data,:open_bracket,:close_bracket,
 
     def property_name_checker
       take_file_data
-      dry_array = take_file_data.scan(/\S*\w*\s\W*\w*;/)
-      property_array = take_file_data.scan(/\S*\w*:/)
+      dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
+      property_array = regex_scanner(/\S*\w*:/)
 
       if dry_array.length - property_array.length != 0
         prompt_message('failed')
