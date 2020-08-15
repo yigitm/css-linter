@@ -10,6 +10,7 @@ class Prompter
         @empty_rule = 'empty_rule'
         @important_tag = important_tag
         @dry_violation = dry_violation
+        @missing_semicolon = missing_semicolon
     end
 
     def prompt_message(message)
@@ -35,6 +36,8 @@ class Prompter
           @important_tag = puts "Over usage of '!important' - Recommended Limit: 9"
         when 'dry_violation'
           @dry_violation = puts "DRY violation"
+        when 'missing_semicolon'
+          @missing_semicolon = puts "Syntax error: Property Name"
         else
           "No message to display!"   
         end

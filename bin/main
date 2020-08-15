@@ -8,4 +8,5 @@ lint.bracket_checker
 lint.empty_rule_checker
 lint.important_tag_checker
 lint.dry_violation_checker
+lint.property_name_checker
 

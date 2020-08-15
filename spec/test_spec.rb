@@ -11,8 +11,8 @@ require_relative '../lib/linters.rb'
   end
 
   describe Linters < Prompter do
+    let(:lint) { Linters.new }
     describe "#bracket_checker" do
-      let(:lint) { Linters.new }
       context "Checks total brakects number if matchs sum is even & not zero" do
         it "Should return 'passed' message" do
           expect(lint.bracket_checker).to eq(@passed)
@@ -44,7 +44,6 @@ require_relative '../lib/linters.rb'
     end
 
     describe "#empty_rule_checker" do
-      let(:lint) { Linters.new }
       context "Checks content between openning & closing brackets and if content is empty" do
         it "It should returns 'failed' & 'empty_rule' message" do
           expect(lint.empty_rule_checker).to eq(@failed)
@@ -60,7 +59,6 @@ require_relative '../lib/linters.rb'
     end
 
     describe "#important_tag_checker" do
-      let(:lint) { Linters.new }
       context "Checks the count of !important tag & if count is MORE than 10" do
         it "It should returns a warning message 'Over usage of '!important' - Recommended Limit: 9'" do
           expect(lint.important_tag_checker).to eq(@failed)
@@ -75,9 +73,8 @@ require_relative '../lib/linters.rb'
       end
     end
 
-    describe "Checks the all property names" do
-      let(:lint) { Linters.new }
-      context "If any duplicates are find" do
+    describe "#dry_violation_checker" do
+      context "Checks the all property names If any duplicates are find" do
         it "It should returns 'failed' & 'DRY violation' message" do
           expect(lint.dry_violation_checker).to eq(@failed)
           expect(lint.dry_violation_checker).to eq(@dry_violation)
@@ -90,6 +87,22 @@ require_relative '../lib/linters.rb'
         end
       end
     end
+
+    describe "#property_name_checker" do
+      context "Checks the all property names If any semicolon is missing" do
+        it "It should returns 'failed' & 'Syntax error: Property Name' message" do
+          expect(lint.property_name_checker).to eq(@failed)
+          expect(lint.property_name_checker).to eq(@missing_semicolon)
+        end
+      end
+
+      context "If all semicolons are macthed" do
+        it "It should returns 'passed' message" do
+          expect(lint.property_name_checker).to eq(@passed)
+        end
+      end
+    end
+
   end
 
     
