@@ -2,7 +2,7 @@ require_relative '../lib/prompter.rb'
 class Linters < Prompter
 include LintCSS
 attr_reader :file_data,:open_bracket,:close_bracket,
-:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close
+:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close,:index
   def initialize
     @file_data = file_data
     @open_bracket = (/{/)
@@ -12,6 +12,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     @matchs = matchs
     @indish_open = indish_open
     @indish_close = indish_close
+    @index = index
   end
 
     def bracket_checker
@@ -33,10 +34,13 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     end
 
     def empty_rule_checker
+      indish_open = []
+      indish_close = []
       take_file_data
       string_to_array
-      find_bracket_index
-      check_fill_or_not
+      @indish_open = find_bracket_index(indish_open)
+      @indish_close = find_bracket_index(indish_close)
+      check_fill_or_not(indish_open, indish_close)
     end
 
     def important_tag_checker

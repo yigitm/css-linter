@@ -29,7 +29,7 @@ class Prompter
         when 'no_brackets'
           @no_brackets = puts "No opening & closing curly brackets."
         when 'empty_rule'
-          @empty_rule = puts "Emty Rule"
+          @empty_rule = puts "Empty Rule"
         when '!important'
           @important_tag = puts "Over usage of '!important' - Recommended Limit: 9"
         else

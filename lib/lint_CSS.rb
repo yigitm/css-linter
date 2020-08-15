@@ -1,5 +1,5 @@
 module LintCSS
-  
+
   def file_read
     @file_read = File.read("lint-style.css")
     @file_read
@@ -23,31 +23,25 @@ module LintCSS
     split_each_item
   end
 
-  def find_bracket_index
-    @indish_open = []
-    @indish_close = []
-    string_to_array.each_with_index do |x , y|
-      if x.match(open_bracket)
-          @indish_open << y
-          @indish_open
-        elsif x.match(close_bracket)
-          @indish_close << y
-          @indish_close
+  def find_bracket_index(open_bracket_array =nil , close_bracket_array = nil)
+    string_to_array.each_with_index do |character , index|
+      if open_bracket_array != nil && character.match(open_bracket) && 
+          open_bracket_array << index
+        elsif close_bracket_array != nil && character.match(close_bracket)
+           close_bracket_array << index
       end
     end
   end
 
-  def check_fill_or_not
-    @indish_open = []
-    @indish_close = []
-    i = 0
-    @indish_open.length.times do
-      if @indish_close[i] - @indish_open[i] <= 1
-        i += 1
+  def check_fill_or_not(open_bracket_array, close_bracket_array)
+    @index = 0
+    open_bracket_array.length.times do
+      if close_bracket_array[@index] - open_bracket_array[@index] <= 1
+        @index += 1
         prompt_message('failed')
         prompt_lint('empty_rule')
-        elsif @indish_close[i] - @indish_open[i] >= 2
-          i += 1
+        elsif close_bracket_array[@index] - open_bracket_array[@index] >= 2
+          @index += 1
           prompt_message('passed')
       end
     end
