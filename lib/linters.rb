@@ -2,7 +2,7 @@ require_relative '../lib/prompter.rb'
 class Linters < Prompter
 include LintCSS
 attr_reader :file_data,:open_bracket,:close_bracket,
-:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close,:index,:bracket_array
+:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close,:dry_array
   def initialize
     @file_data = file_data
     @open_bracket = (/{/)
@@ -12,8 +12,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     @matchs = matchs
     @indish_open = indish_open
     @indish_close = indish_close
-    @index = index
-    @bracket_array = bracket_array
+    @dry_array = dry_array
   end
 
     def bracket_checker
@@ -59,4 +58,19 @@ attr_reader :file_data,:open_bracket,:close_bracket,
         false
       end
     end
+
+    def dry_violation_checker
+      take_file_data
+      dry_array = take_file_data.scan(/\S*\w*:/)
+
+      if dry_array == dry_array.uniq
+        prompt_message('passed')
+      else
+        prompt_message('failed')
+        prompt_lint('dry_violation')
+      end
+    end
+
+    
+
 end
