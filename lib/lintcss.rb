@@ -1,4 +1,4 @@
-module LintCSS
+module Lintcss
   def file_select
     @file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css',
                   'lint-important.css', 'lint-dry.css', 'lint-property.css']
@@ -33,7 +33,48 @@ module LintCSS
     split_each_item
   end
 
-  def find_bracket_index(bracket_type)
+  def compare_bracket_length
+    if find_same_brackets('{').length == find_same_brackets('}')
+      true
+    elsif find_same_brackets('{').length != find_same_brackets('}')
+      false
+    end
+  end
+
+  def begin_end_bracket_checker
+    string_to_array.each_with_index do |character, _index|
+      true if character.match('{') && character.match('}')
+    end
+  end
+
+  def bracket_even_checker
+    if compare_bracket_length
+      prompt_message('passed')
+    elsif bracket_no_checker
+      prompt_message('failed')
+      prompt_lint('no_brackets')
+    else
+      prompt_message('failed')
+      prompt_lint('missing_brackets')
+    end
+  end
+
+  def bracket_odd_checker
+    if matchs.odd?
+      true if begin_end_bracket_checker
+      prompt_message('failed')
+      prompt_lint('missing_brackets')
+    elsif bracket_no_checker
+      prompt_message('failed')
+      prompt_lint('no_brackets')
+    end
+  end
+
+  def bracket_no_checker
+    true if matchs.zero? || matchs.nil?
+  end
+
+  def find_same_brackets(bracket_type)
     bracket_array = []
     string_to_array.each_with_index do |character, index|
       bracket_array << index if character.match(bracket_type)

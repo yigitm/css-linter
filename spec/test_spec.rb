@@ -1,7 +1,7 @@
-require_relative '../lib/lint_CSS.rb'
+require_relative '../lib/lintcss.rb'
 require_relative '../lib/linters.rb'
 
-describe LintCSS do
+describe Lintcss do
   let(:lint) { Linters.new }
   context 'Checks user input & macth it with related string file name' do
     it "Should return a 'String' value" do

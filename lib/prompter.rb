@@ -3,7 +3,6 @@ require 'colorize'
 class Prompter
   attr_reader :passed, :failed, :warning,
               :missing_brackets, :no_brackets, :empty_rule, :important_tag, :dry_violation, :file_list
-  # :file_list,:file_bn,:file_bm,:file_e,:file_i,:file_d,:file_p,:selected_file,:valid
 
   def initialize
     @passed = 'passed'
@@ -15,12 +14,6 @@ class Prompter
     @important_tag = 'important_tag'
     @dry_violation = 'dry_violation'
     @file_list = file_list
-    # @file_bn = 'lint-bracket_no.css'
-    # @file_bm = 'lint-bracket_missing.css'
-    # @file_e = 'lint-empty-rule.css'
-    # @file_i = 'lint-important.css'
-    # @file_d = 'lint-dry.css'
-    # @file_p = 'lint-property.css'
     @selected_file = selected_file
     @valid = false
   end
@@ -49,7 +42,6 @@ class Prompter
         @valid = true
         @selected_file
       end
-      @selected_file
       break if @valid == true
     end
   end

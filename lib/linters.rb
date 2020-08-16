@@ -1,6 +1,6 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
-  include LintCSS
+  include Lintcss
   attr_reader :file_data, :open_bracket, :close_bracket,
               :first_bracket, :last_bracket, :matchs, :indish_open, :indish_close, :dry_array,
               :stop_execution
@@ -21,27 +21,30 @@ class Linters < Prompter
     take_file_data
     bracket_match_keeper
     bracket_splitter
-    if matchs.even? && find_bracket_index('{').length == find_bracket_index('}')
-      prompt_message('passed')
-    elsif matchs.even? && find_bracket_index('{').length != find_bracket_index('}')
-      prompt_message('failed')
-      prompt_lint('missing_brackets')
-    elsif matchs.odd? == true && matchs != 0
-      prompt_message('failed')
-      prompt_lint('missing_brackets')
-    elsif matchs == 0
-      prompt_message('failed')
-      prompt_lint('no_brackets')
-    elsif first_bracket == ['{'] && last_bracket == ['}'] && matchs.odd?
-      prompt_message('failed')
-      prompt_lint('missing_brackets')
-    end
+    bracket_even_checker
+    bracket_odd_checker
   end
+
+  # if matchs.even? && compare_bracket_length
+  #   prompt_message('passed')
+  # elsif matchs.even? && compare_bracket_length
+  #   prompt_message('failed')
+  #   prompt_lint('missing_brackets')
+  # elsif matchs.odd? && matchs.zero? == false
+  #   prompt_message('failed')
+  #   prompt_lint('missing_brackets')
+  # elsif matchs.zero?
+  #   prompt_message('failed')
+  #   prompt_lint('no_brackets')
+  # elsif first_bracket_checker && first_bracket_checker && matchs.odd?
+  #   prompt_message('failed')
+  #   prompt_lint('missing_brackets')
+  # end
 
   def empty_rule_checker
     take_file_data
-    indish_open = find_bracket_index(open_bracket)
-    indish_close = find_bracket_index(close_bracket)
+    indish_open = find_same_brackets(open_bracket)
+    indish_close = find_same_brackets(close_bracket)
     message = check_fill_or_not(indish_open, indish_close)
     if message == true
       prompt_message('failed')
@@ -84,7 +87,7 @@ class Linters < Prompter
     if find_length_difference(dry_array, property_array) != 0
       prompt_message('failed')
       prompt_lint('property_name')
-    elsif find_length_difference(dry_array, property_array) == 0
+    elsif find_length_difference(dry_array, property_array).zero? == true
       prompt_message('passed')
     end
   end
