@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
-require_relative '../lib/lint_CSS.rb'
+require_relative '../lib/lint_css.rb'
 require_relative '../lib/linters.rb'
 
-lint = Linters.new()
+lint = Linters.new
 
 lint.prompt_welcome
 lint.file_select
@@ -13,5 +13,3 @@ lint.property_name_checker
 lint.important_tag_checker
 lint.dry_violation_checker
 lint.prompt_stop_execute
-
-
