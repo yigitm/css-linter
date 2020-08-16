@@ -67,7 +67,6 @@ class Prompter
     else
       'No message to display!'
     end
-
   end
 
   def prompt_lint(lint_message)
@@ -97,5 +96,4 @@ class Prompter
   end
 
 end
-
 # rubocop:enable Metrics/CyclomaticComplexity
