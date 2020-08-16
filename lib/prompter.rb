@@ -67,7 +67,7 @@ class Prompter
     end
   end
 
-  def prompt_lint(lint_message)
+  def prompt_lint_error(lint_message)
     case lint_message
     when 'missing_brackets'
       @missing_tag = puts 'Missing curly bracket(s)'.red
@@ -75,12 +75,19 @@ class Prompter
       @no_brackets = puts 'No opening & closing curly brackets.'.red
     when 'empty_rule'
       @empty_rule = puts 'Empty Rule'.red
+    when 'property_name'
+      @property_name = puts 'Syntax error: Property Name'.red
+    else
+      'No message to display!'
+    end
+  end
+
+  def prompt_lint_warning(lint_message)
+    case lint_message
     when '!important'
       @important_tag = puts "Over usage of '!important' - Recommended Limit: 9".yellow
     when 'dry_violation'
       @dry_violation = puts 'DRY violation'.yellow
-    when 'property_name'
-      @property_name = puts 'Syntax error: Property Name'.red
     else
       'No message to display!'
     end
@@ -90,6 +97,6 @@ class Prompter
     puts "\nThank you for your time & support\n".white
     print '|R|U|B|Y| '.red
     print '|L|I|N|T|E|R| '.yellow
-    abort 'ends...'
+    abort 'ending...'
   end
 end

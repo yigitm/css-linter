@@ -48,7 +48,7 @@ class Linters < Prompter
     message = check_fill_or_not(indish_open, indish_close)
     if message == true
       prompt_message('failed')
-      prompt_lint('empty_rule')
+      prompt_lint_error('empty_rule')
     else
       prompt_message('passed')
     end
@@ -61,7 +61,7 @@ class Linters < Prompter
       prompt_message('passed')
     when (10..file_data.size)
       prompt_message('warning')
-      prompt_lint('!important')
+      prompt_lint_warning('!important')
     else
       false
     end
@@ -75,7 +75,7 @@ class Linters < Prompter
       prompt_message('passed')
     else
       prompt_message('warning')
-      prompt_lint('dry_violation')
+      prompt_lint_warning('dry_violation')
     end
   end
 
@@ -86,7 +86,7 @@ class Linters < Prompter
 
     if find_length_difference(dry_array, property_array) != 0
       prompt_message('failed')
-      prompt_lint('property_name')
+      prompt_lint_warning('property_name')
     elsif find_length_difference(dry_array, property_array).zero? == true
       prompt_message('passed')
     end

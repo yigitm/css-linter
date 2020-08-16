@@ -52,10 +52,10 @@ module Lintcss
       prompt_message('passed')
     elsif bracket_no_checker
       prompt_message('failed')
-      prompt_lint('no_brackets')
+      prompt_lint_error('no_brackets')
     else
       prompt_message('failed')
-      prompt_lint('missing_brackets')
+      prompt_lint_error('missing_brackets')
     end
   end
 
@@ -63,10 +63,10 @@ module Lintcss
     if matchs.odd?
       true if begin_end_bracket_checker
       prompt_message('failed')
-      prompt_lint('missing_brackets')
+      prompt_lint_error('missing_brackets')
     elsif bracket_no_checker
       prompt_message('failed')
-      prompt_lint('no_brackets')
+      prompt_lint_error('no_brackets')
     end
   end
 
