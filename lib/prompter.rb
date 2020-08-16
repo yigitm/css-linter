@@ -65,7 +65,7 @@ class Prompter
     else
       'No message to display!'
     end
-  end # rubocop:disable Metrics/CyclomaticComplexity
+  end
 
   def prompt_lint(lint_message)
     case lint_message
@@ -84,7 +84,7 @@ class Prompter
     else
       'No message to display!'
     end
-  end # rubocop:enable Metrics/CyclomaticComplexity
+  end
 
   def prompt_stop_execute
     puts "\nThank you for your time & support\n".white
@@ -92,4 +92,5 @@ class Prompter
     print '|L|I|N|T|E|R| '.yellow
     abort 'ends...'
   end
+  
 end
