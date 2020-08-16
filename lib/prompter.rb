@@ -94,4 +94,5 @@ class Prompter
     abort 'ends...'
   end
 end
+
 # rubocop:enable Metrics/CyclomaticComplexity
