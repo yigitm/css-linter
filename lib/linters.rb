@@ -2,7 +2,8 @@ require_relative '../lib/prompter.rb'
 class Linters < Prompter
 include LintCSS
 attr_reader :file_data,:open_bracket,:close_bracket,
-:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close,:dry_array
+:first_bracket,:last_bracket,:matchs,:indish_open,:indish_close,:dry_array,
+:stop_execution
   def initialize
     @file_data = file_data
     @open_bracket = (/{/)
@@ -13,6 +14,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
     @indish_open = indish_open
     @indish_close = indish_close
     @dry_array = dry_array
+    @stop_execution = false
   end
 
     def bracket_checker
@@ -66,7 +68,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
       if dry_array == dry_array.uniq
         prompt_message('passed')
       else
-        prompt_message('failed')
+        prompt_message('warning')
         prompt_lint('dry_violation')
       end
     end
@@ -78,7 +80,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
 
       if find_length_difference(dry_array, property_array) != 0
         prompt_message('failed')
-        prompt_lint('missing_semicolon')
+        prompt_lint('property_name')
       elsif find_length_difference(dry_array, property_array) == 0
         prompt_message('passed')
       end

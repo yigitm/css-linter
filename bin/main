@@ -4,9 +4,14 @@ require_relative '../lib/linters.rb'
 
 lint = Linters.new()
 
-# lint.bracket_checker
-# lint.empty_rule_checker
-# lint.important_tag_checker
-# lint.dry_violation_checker
+lint.prompt_welcome
+lint.file_select
+lint.file_read
+lint.bracket_checker
+lint.empty_rule_checker
 lint.property_name_checker
+lint.important_tag_checker
+lint.dry_violation_checker
+lint.stop_execute
+
 

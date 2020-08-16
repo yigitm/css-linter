@@ -1,13 +1,32 @@
 module LintCSS
 
+  def stop_execute
+    puts "Thank you for your time & support\n"
+    abort 'Ruby Linter ends.'
+  end
+
+  def file_select
+    @file_list = ['lint-bracket_no.css','lint-bracket_missing.css','lint-empty-rule.css',
+        'lint-important.css','lint-dry.css','lint-property.css']
+    input = @selected_file
+    @file_list.each do |file|
+      if @file_list.index(file).to_i ==  input.to_i - 1 
+        @file_list[input.to_i - 1]
+      end
+    end
+    @file_list[input.to_i - 1]
+  end
+
   def file_read
-    @file_read = File.read("lint-style.css")
+    @file_read = File.read(file_select)
     @file_read
   end
 
   def take_file_data
     @file_data = file_read
+    @file_data
   end
+
 
   def bracket_splitter
     @first_bracket = @file_data.split('').values_at(0) 

@@ -3,8 +3,14 @@ require_relative '../lib/linters.rb'
   
   describe LintCSS do
     let(:lint) { Linters.new }
-    context "if CSS file is read successfully" do
+    context "Checks user input & macth it with related string file name" do
       it "Should return a 'String' value" do
+        expect(lint.file_select.class).to be(String)
+      end
+    end
+
+    context "Takes user input & read the file content" do
+      it "Should return related file content as a 'String' value" do
         expect(lint.file_read.class).to be(String)
       end
     end
@@ -76,7 +82,7 @@ require_relative '../lib/linters.rb'
     describe "#dry_violation_checker" do
       context "Checks the all property names If any duplicates are find" do
         it "It should returns 'failed' & 'DRY violation' message" do
-          expect(lint.dry_violation_checker).to eq(@failed)
+          expect(lint.dry_violation_checker).to eq(@warning)
           expect(lint.dry_violation_checker).to eq(@dry_violation)
         end
       end
