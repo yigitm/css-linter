@@ -1,7 +1,6 @@
 require_relative '../lib/linters.rb'
 require 'colorize'
 # rubocop:disable Metrics/CyclomaticComplexity
-
 class Prompter
   attr_reader :passed, :failed, :warning,
               :missing_brackets, :no_brackets, :empty_rule, :important_tag, :dry_violation, :file_list
@@ -94,6 +93,5 @@ class Prompter
     print '|L|I|N|T|E|R| '.yellow
     abort 'ends...'
   end
-
 end
 # rubocop:enable Metrics/CyclomaticComplexity
