@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require_relative '../lib/lint_css.rb'
+require_relative '../lib/lintcss.rb'
 require_relative '../lib/linters.rb'
 
 lint = Linters.new

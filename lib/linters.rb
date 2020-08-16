@@ -1,6 +1,6 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
-  include LintCSS
+  include Lintcss
   attr_reader :file_data, :open_bracket, :close_bracket,
               :first_bracket, :last_bracket, :matchs, :indish_open, :indish_close, :dry_array,
               :stop_execution
