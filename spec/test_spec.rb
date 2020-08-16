@@ -95,14 +95,14 @@ require_relative '../lib/linters.rb'
     end
 
     describe "#property_name_checker" do
-      context "Checks the all property names If any semicolon is missing" do
+      context "Checks the all colon(s) & semi-colon(s) in property names and if any missing" do
         it "It should returns 'failed' & 'Syntax error: Property Name' message" do
           expect(lint.property_name_checker).to eq(@failed)
           expect(lint.property_name_checker).to eq(@missing_semicolon)
         end
       end
 
-      context "If syntax is correct" do
+      context "If colon(s) & semi-colon(s) syntax is correct" do
         it "It should returns 'passed' message" do
           expect(lint.property_name_checker).to eq(@passed)
         end

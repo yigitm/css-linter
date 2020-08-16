@@ -43,9 +43,9 @@ class Prompter
         puts "\n\nPlease select any 'file_id' between '1 to 9' for linter check\n".white
         prompt_file_list
         @selected_file = gets.chomp
-        if @selected_file.match(/[1-5]/) == nil
+        if @selected_file.match(/[1-6]/) == nil
         puts "Invalid entry. Please type/select a number between 1..9"
-        elsif @selected_file.match(/[1-5]/) != nil
+        elsif @selected_file.match(/[1-6]/) != nil
           @valid = true
           @selected_file
         end
@@ -55,13 +55,13 @@ class Prompter
     end
 
     def prompt_file_list
-      @file_list = ['lint-bracket_no.css','lint-bracket_missing.css','lint-empty-rule.css',
+      @file_list = ['lint-bracket-no.css','lint-bracket-missing.css','lint-empty-rule.css',
         'lint-important.css','lint-dry.css','lint-property.css']
       @file_list.each_with_index do |file, id|
         puts "#{id+1}-#{file}\n".light_blue
       end
     end
-
+    
     def prompt_message(message)
         case message 
         when 'passed'
@@ -92,5 +92,12 @@ class Prompter
         else
           "No message to display!"   
         end
-    end    
+    end
+    
+    def prompt_stop_execute
+      puts "\nThank you for your time & support\n".white
+      print "|R|U|B|Y| ".red
+      print "|L|I|N|T|E|R| ".yellow
+      abort 'ends...'
+    end
 end

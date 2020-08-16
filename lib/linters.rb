@@ -21,8 +21,11 @@ attr_reader :file_data,:open_bracket,:close_bracket,
       take_file_data
       bracket_match_keeper
       bracket_splitter
-      if matchs.even? && matchs != 0
+      if matchs.even? && find_bracket_index('{').length == find_bracket_index('}')
         prompt_message('passed')
+      elsif matchs.even? && find_bracket_index('{').length != find_bracket_index('}')
+        prompt_message('failed')
+        prompt_lint('missing_brackets')
       elsif matchs.odd? == true && matchs != 0
         prompt_message('failed')
         prompt_lint('missing_brackets')
@@ -54,7 +57,7 @@ attr_reader :file_data,:open_bracket,:close_bracket,
       when (0..9)
         prompt_message('passed')
       when (10..file_data.size)
-        prompt_message('failed')
+        prompt_message('warning')
         prompt_lint('!important')
       else
         false

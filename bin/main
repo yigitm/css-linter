@@ -12,6 +12,6 @@ lint.empty_rule_checker
 lint.property_name_checker
 lint.important_tag_checker
 lint.dry_violation_checker
-lint.stop_execute
+lint.prompt_stop_execute
 
 

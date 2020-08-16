@@ -1,0 +1,21 @@
+.some-title (
+  font-weight: lighter;
+)
+.some-other-title (
+  color: red;
+  font-weight: lighter;
+)
+.some-title (
+  font-weight: bold;
+)
+.some-other-title (
+  color: red;
+  font-weight: bolder;
+)
+.some-title (
+  font-weight: bold;
+)
+.some-other-title (
+  color: red;
+  font-weight: bold;
+)
