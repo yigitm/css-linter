@@ -66,7 +66,7 @@ class Prompter
       'No message to display!'
     end
   end
-# rubocop:disable Metrics/CyclomaticComplexity
+
   def prompt_lint(lint_message)
     case lint_message
     when 'missing_brackets'
@@ -85,7 +85,7 @@ class Prompter
       'No message to display!'
     end
   end
-# rubocop:enable Metrics/CyclomaticComplexity
+
   def prompt_stop_execute
     puts "\nThank you for your time & support\n".white
     print '|R|U|B|Y| '.red

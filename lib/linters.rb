@@ -25,22 +25,6 @@ class Linters < Prompter
     bracket_odd_checker
   end
 
-  # if matchs.even? && compare_bracket_length
-  #   prompt_message('passed')
-  # elsif matchs.even? && compare_bracket_length
-  #   prompt_message('failed')
-  #   prompt_lint('missing_brackets')
-  # elsif matchs.odd? && matchs.zero? == false
-  #   prompt_message('failed')
-  #   prompt_lint('missing_brackets')
-  # elsif matchs.zero?
-  #   prompt_message('failed')
-  #   prompt_lint('no_brackets')
-  # elsif first_bracket_checker && first_bracket_checker && matchs.odd?
-  #   prompt_message('failed')
-  #   prompt_lint('missing_brackets')
-  # end
-
   def empty_rule_checker
     take_file_data
     indish_open = find_same_brackets(open_bracket)
