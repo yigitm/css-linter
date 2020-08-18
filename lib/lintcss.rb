@@ -4,42 +4,22 @@ module Lintcss
                   'test_files/lint-important.css', 'test_files/lint-dry.css', 'test_files/lint-property.css']
     @file_list.each do |file| 
         if @file_list.index(file).to_i == @selected_file.to_i - 1
-          puts "processing #{@file_list[@selected_file.to_i - 1]}"
+          @selected_file = @file_list[@selected_file.to_i - 1]
         end
     end
-    @selected_file
-  end
-
-  def which_file?
-    if @selected_file.to_s.match(/.css$/)
-      puts "processing #{@selected_file}"
-      true
-    else
-      puts "hedehoe"
-      false
-    end
-  end
-
-  def file_read
-    @file_read = File.read(@selected_file.to_s)
-  end
-
-  def take_file_data
-    @file_data = file_read
-    @file_data
   end
 
   def bracket_splitter
-    @first_bracket = @file_data.split('').values_at(0)
-    @last_bracket = @file_data.split('').values_at(-1)
+    @first_bracket = file_read.split('').values_at(0)
+    @last_bracket = file_read.split('').values_at(-1)
   end
 
   def bracket_match_keeper
-    @matchs = @file_data.scan(@open_bracket).size + @file_data.scan(@close_bracket).size
+    @matchs = file_read.scan(@open_bracket).size + file_read.scan(@close_bracket).size
   end
 
   def string_to_array
-    split_each_item = @file_data.split(' ')
+    split_each_item = file_read.split(' ')
     split_each_item
   end
 
@@ -107,7 +87,7 @@ module Lintcss
   end
 
   def regex_scanner(regex_variable)
-    scanned_array = take_file_data.scan(regex_variable)
+    scanned_array = file_read.scan(regex_variable)
     scanned_array
   end
 

@@ -1,11 +1,10 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
   include Lintcss
-  attr_reader :file_data, :open_bracket, :close_bracket,
+  attr_reader :open_bracket, :close_bracket,
               :first_bracket, :last_bracket, :matchs, :indish_open, :indish_close, :dry_array,
-              :stop_execution, :user_test_file
+              :stop_execution
   def initialize
-    @file_data = file_data
     @open_bracket = /{/
     @close_bracket = /}/
     @first_bracket = first_bracket
@@ -17,8 +16,12 @@ class Linters < Prompter
     @stop_execution = false
   end
 
+  def file_read
+    file_data = File.read(@selected_file.to_s)
+  end
+
   def bracket_checker
-    take_file_data
+    file_read
     bracket_match_keeper
     bracket_splitter
     bracket_even_checker
@@ -26,7 +29,7 @@ class Linters < Prompter
   end
 
   def empty_rule_checker
-    take_file_data
+    file_read
     indish_open = find_same_brackets(open_bracket)
     indish_close = find_same_brackets(close_bracket)
     message = check_fill_or_not(indish_open, indish_close)
@@ -39,11 +42,11 @@ class Linters < Prompter
   end
 
   def important_tag_checker
-    count_important = take_file_data.scan('!important').size
+    count_important = file_read.scan('!important').size
     case count_important
     when (0..9)
       prompt_message('passed')
-    when (10..file_data.size)
+    when (10..file_read.size)
       prompt_message('warning')
       prompt_lint_warning('!important')
     else
@@ -52,8 +55,7 @@ class Linters < Prompter
   end
 
   def dry_violation_checker
-    take_file_data
-    dry_array = take_file_data.scan(/\S*\w*\s\W*\w*;/)
+    dry_array = file_read.scan(/\S*\w*\s\W*\w*;/)
 
     if dry_array == dry_array.uniq
       prompt_message('passed')
@@ -64,7 +66,7 @@ class Linters < Prompter
   end
 
   def property_name_checker
-    take_file_data
+    file_read
     dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
     property_array = regex_scanner(/\S*\w*:/)
 
