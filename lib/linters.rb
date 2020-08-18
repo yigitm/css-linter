@@ -17,7 +17,11 @@ class Linters < Prompter
   end
 
   def file_read
-    file_data = File.read(@selected_file.to_s)
+    begin
+      file_data = File.read(@selected_file.to_s)
+    rescue => exception
+      abort'Please enter a correct file name & re-launch the programme'
+    end
   end
 
   def bracket_checker
