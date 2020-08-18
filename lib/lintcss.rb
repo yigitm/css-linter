@@ -1,7 +1,7 @@
 module Lintcss
   def file_select
-    @file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css',
-                  'lint-important.css', 'lint-dry.css', 'lint-property.css']
+    @file_list = ['test_files/lint-bracket-no.css', 'test_files/lint-bracket-missing.css', 'test_files/lint-empty-rule.css',
+                  'test_files/lint-important.css', 'test_files/lint-dry.css', 'test_files/lint-property.css']
     input = @selected_file
     @file_list.each do |file|
       @file_list[input.to_i - 1] if @file_list.index(file).to_i == input.to_i - 1
