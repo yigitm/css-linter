@@ -134,7 +134,7 @@ This lint is checks the case of mixing curly bracket(s) with regular bracket(s) 
 }
 ```
 
-#### - Emty Rule
+#### - Empty Rule
 
 This lint is checks the case of leaving empty rule(s). It displays an error message.
 
