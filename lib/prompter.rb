@@ -1,8 +1,9 @@
 require_relative '../lib/linters.rb'
 require 'colorize'
 class Prompter
-  attr_reader :passed, :failed, :warning,
-              :missing_brackets, :no_brackets, :empty_rule, :important_tag, :dry_violation, :file_list
+  attr_reader :passed, :failed, :warning, :missing_brackets,
+              :no_brackets, :empty_rule, :important_tag,
+              :dry_violation, :file_list, :selected_file
 
   def initialize
     @passed = 'passed'
@@ -16,6 +17,7 @@ class Prompter
     @file_list = file_list
     @selected_file = selected_file
     @valid = false
+    @user_test_file = user_test_file
   end
 
   def prompt_ascii
@@ -33,17 +35,24 @@ class Prompter
   def prompt_welcome
     loop do
       prompt_ascii
-      puts "\n\nPlease select any 'file_id' between '1 to 9' for linter check\n".white
+      puts "\n\nPlease type the name of your test file (your-file.css) or select any 'file_id' between '1 to 6' for linter check\n".white
       prompt_file_list
       @selected_file = gets.chomp
-      if @selected_file.match(/[1-6]/).nil?
-        puts 'Invalid entry. Please type/select a number between 1..9'
-      elsif !@selected_file.match(/[1-6]/).nil?
+      if @selected_file.match(/^[1-6]|.css$/).nil?
+        puts 'Invalid entry. Please type the full file name including ".css" extension or select a number between 1..6'
+      elsif !(@selected_file.match(/[1-6]/).nil?) && @selected_file.size == 1
         @valid = true
-        @selected_file
+      elsif !(@selected_file.match(/.css$/).nil?) && @selected_file.size >= 4
+        @valid = true
       end
+      @selected_file
       break if @valid == true
     end
+  end
+
+  def valid_input?
+
+    
   end
 
   def prompt_file_list

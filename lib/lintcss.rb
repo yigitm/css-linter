@@ -1,17 +1,27 @@
 module Lintcss
-  def file_select
+  def which_default_file?
     @file_list = ['test_files/lint-bracket-no.css', 'test_files/lint-bracket-missing.css', 'test_files/lint-empty-rule.css',
                   'test_files/lint-important.css', 'test_files/lint-dry.css', 'test_files/lint-property.css']
-    input = @selected_file
-    @file_list.each do |file|
-      @file_list[input.to_i - 1] if @file_list.index(file).to_i == input.to_i - 1
+    @file_list.each do |file| 
+        if @file_list.index(file).to_i == @selected_file.to_i - 1
+          puts "processing #{@file_list[@selected_file.to_i - 1]}"
+        end
     end
-    @file_list[input.to_i - 1]
+    @selected_file
+  end
+
+  def which_file?
+    if @selected_file.to_s.match(/.css$/)
+      puts "processing #{@selected_file}"
+      true
+    else
+      puts "hedehoe"
+      false
+    end
   end
 
   def file_read
-    @file_read = File.read(file_select.to_s)
-    @file_read
+    @file_read = File.read(@selected_file.to_s)
   end
 
   def take_file_data

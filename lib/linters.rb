@@ -3,7 +3,7 @@ class Linters < Prompter
   include Lintcss
   attr_reader :file_data, :open_bracket, :close_bracket,
               :first_bracket, :last_bracket, :matchs, :indish_open, :indish_close, :dry_array,
-              :stop_execution
+              :stop_execution, :user_test_file
   def initialize
     @file_data = file_data
     @open_bracket = /{/
