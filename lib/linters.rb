@@ -31,12 +31,17 @@ class Linters < Prompter
   # end
 
   def bracket_checker
-    open_bracket = regex_scanner(/\s\W?{/).count
-    close_bracket = regex_scanner(/\s\W?}/).count
+    open_bracket = regex_scanner(/{/).count
+    close_bracket = regex_scanner(/}/).count
     total_brackets = open_bracket + close_bracket
-    if open_bracket == close_bracket && total_brackets.zero? == false
+    check_with_rule = regex_scanner(/^.\w/).size * 2
+    if open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule == total_brackets
       prompt_message('passed')
       true
+    elsif open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule != total_brackets
+      prompt_message('failed')
+      prompt_lint_error('missing_brackets')
+      false
     elsif close_bracket != open_bracket
       prompt_message('failed')
       prompt_lint_error('missing_brackets')
