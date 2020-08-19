@@ -1,15 +1,11 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
   include Lintcss
-  attr_reader :open_bracket, :close_bracket,
-              :first_bracket, :last_bracket, :matchs, :indish_open, :indish_close, :dry_array,
+  attr_reader :open_bracket, :close_bracket, :indish_open, :indish_close, :dry_array,
               :stop_execution
   def initialize
     @open_bracket = /{/
     @close_bracket = /}/
-    @first_bracket = first_bracket
-    @last_bracket = last_bracket
-    @matchs = matchs
     @indish_open = indish_open
     @indish_close = indish_close
     @dry_array = dry_array
@@ -24,11 +20,12 @@ class Linters < Prompter
     end
   end
 
-  # def prompt_error_line
-  #   File.open('test_files/lint-bracket-no.css') do |file|
-  #     puts file.readlines().include?('{')
-  #   end
-  # end
+  def error_line_checker
+
+    file_read.each do |line|
+      puts line.readlines().include?('{')
+    end
+  end
 
   def bracket_checker
     open_bracket = regex_scanner(/{/).count
@@ -38,7 +35,7 @@ class Linters < Prompter
     if open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule == total_brackets
       prompt_message('passed')
       true
-    elsif open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule != total_brackets
+    elsif open_bracket == close_bracket && !(total_brackets.zero?) && !(check_with_rule == total_brackets)
       prompt_message('failed')
       prompt_lint_error('missing_brackets')
       false
@@ -49,8 +46,6 @@ class Linters < Prompter
     elsif total_brackets.zero?
       prompt_message('failed')
       prompt_lint_error('no_brackets')
-      false
-    else
       nil
     end
   end
