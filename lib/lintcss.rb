@@ -9,61 +9,11 @@ module Lintcss
     end
   end
 
-  def bracket_splitter
-    @first_bracket = file_read.split('').values_at(0)
-    @last_bracket = file_read.split('').values_at(-1)
-  end
-
-  def bracket_match_keeper
-    @matchs = file_read.scan(@open_bracket).size + file_read.scan(@close_bracket).size
-  end
-
   def string_to_array
     split_each_item = file_read.split(' ')
     split_each_item
   end
-
-  def compare_bracket_length
-    if find_same_brackets('{').length == find_same_brackets('}')
-      true
-    elsif find_same_brackets('{').length != find_same_brackets('}')
-      false
-    end
-  end
-
-  def begin_end_bracket_checker
-    string_to_array.each_with_index do |character, _index|
-      true if character.match('{') && character.match('}')
-    end
-  end
-
-  def bracket_even_checker
-    if compare_bracket_length
-      prompt_message('passed')
-    elsif bracket_no_checker
-      prompt_message('failed')
-      prompt_lint_error('no_brackets')
-    else
-      prompt_message('failed')
-      prompt_lint_error('missing_brackets')
-    end
-  end
-
-  def bracket_odd_checker
-    if matchs.odd?
-      true if begin_end_bracket_checker
-      prompt_message('failed')
-      prompt_lint_error('missing_brackets')
-    elsif bracket_no_checker
-      prompt_message('failed')
-      prompt_lint_error('no_brackets')
-    end
-  end
-
-  def bracket_no_checker
-    true if matchs.zero? || matchs.nil?
-  end
-
+  
   def find_same_brackets(bracket_type)
     bracket_array = []
     string_to_array.each_with_index do |character, index|

@@ -24,12 +24,30 @@ class Linters < Prompter
     end
   end
 
+  # def prompt_error_line
+  #   File.open('test_files/lint-bracket-no.css') do |file|
+  #     puts file.readlines().include?('{')
+  #   end
+  # end
+
   def bracket_checker
-    file_read
-    bracket_match_keeper
-    bracket_splitter
-    bracket_even_checker
-    bracket_odd_checker
+    open_bracket = regex_scanner(/\s\W?{/).count
+    close_bracket = regex_scanner(/\s\W?}/).count
+    total_brackets = open_bracket + close_bracket
+    if open_bracket == close_bracket && total_brackets.zero? == false
+      prompt_message('passed')
+      true
+    elsif close_bracket != open_bracket
+      prompt_message('failed')
+      prompt_lint_error('missing_brackets')
+      false
+    elsif total_brackets.zero?
+      prompt_message('failed')
+      prompt_lint_error('no_brackets')
+      false
+    else
+      nil
+    end
   end
 
   def empty_rule_checker

@@ -59,7 +59,7 @@ class Prompter
       puts "#{id + 1}-#{file}\n".light_blue
     end
   end
-
+  
   def prompt_message(message)
     case message
     when 'passed'
