@@ -20,11 +20,26 @@ class Linters < Prompter
     end
   end
 
-  def error_line_checker
-
-    file_read.each do |line|
-      puts line.readlines().include?('{')
+  def prompt_no_open_bracket
+    file = @selected_file.to_s
+    i = 1
+    File.readlines(file).each do |item|
+      line = "line #{i}: #{item} missing brackets"
+      if item.match?(/[.]/) == true && item.match?(/[.]?\{/) == false
+        puts line
+      end
+      i += 1
     end
+  end
+  
+  def prompt_no_close_bracket
+    file = @selected_file.to_s
+    File.readlines(file).each_with_index do |item, index|
+      line = "Possible missing closing brackets, please check line: #{index + 1}"
+      if item.match?(/^\n/)
+        puts line
+      end
+    end 
   end
 
   def bracket_checker
@@ -51,9 +66,8 @@ class Linters < Prompter
   end
 
   def empty_rule_checker
-    file_read
-    indish_open = find_same_brackets(open_bracket)
-    indish_close = find_same_brackets(close_bracket)
+    indish_open = find_same_brackets('{')
+    indish_close = find_same_brackets('}')
     message = check_fill_or_not(indish_open, indish_close)
     if message == true
       prompt_message('failed')
@@ -91,7 +105,6 @@ class Linters < Prompter
     file_read
     dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
     property_array = regex_scanner(/\S*\w*:/)
-
     if find_length_difference(dry_array, property_array) != 0
       prompt_message('failed')
       prompt_lint_warning('property_name')
