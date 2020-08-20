@@ -1,3 +1,4 @@
+require 'colorize'
 module Lintcss
   def which_default_file?
     @file_list = ['test_files/lint-bracket-no.css', 'test_files/lint-bracket-missing.css', 'test_files/lint-empty-rule.css',
@@ -28,6 +29,7 @@ module Lintcss
     l.times do
       if indish_close[i] - indish_open[i] <= 1
         i += 1
+        @empty-line = indish_close[i]
         return true
       elsif indish_close[i] - indish_open[i] >= 2
         i += 1
@@ -38,11 +40,9 @@ module Lintcss
 
   def regex_scanner(regex_variable)
     scanned_array = file_read.scan(regex_variable)
-    scanned_array
   end
 
   def find_length_difference(array_one, array_two)
     result = array_one.length - array_two.length
-    result
   end
 end

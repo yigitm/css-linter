@@ -99,6 +99,28 @@ class Prompter
     end
   end
 
+  def prompt_no_open_bracket
+    file = @selected_file.to_s
+    i = 1
+    File.readlines(file).each do |item|
+      line = "line #{i}: #{item} missing brackets"
+      if item.match?(/[.]/) == true && item.match?(/[.]?\{/) == false
+        puts line.red
+      end
+      i += 1
+    end
+  end
+  
+  def prompt_no_close_bracket
+    file = @selected_file.to_s
+    File.readlines(file).each_with_index do |item, index|
+      line = "Possible missing closing bracket, please check line: #{index + 1}"
+      if item.match?(/^\n/)
+        puts line.red
+      end
+    end 
+  end
+
   def prompt_stop_execute
     puts "\nThank you for your time & support\n".white
     print '|R|U|B|Y| '.red

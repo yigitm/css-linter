@@ -1,13 +1,11 @@
 require_relative '../lib/prompter.rb'
 class Linters < Prompter
   include Lintcss
-  attr_reader :open_bracket, :close_bracket, :indish_open, :indish_close, :dry_array,
-              :stop_execution
+  attr_reader :indish_open, :indish_close, :empty_line, :dry_array, :stop_execution
   def initialize
-    @open_bracket = /{/
-    @close_bracket = /}/
     @indish_open = indish_open
     @indish_close = indish_close
+    @empty_line = empty_line
     @dry_array = dry_array
     @stop_execution = false
   end
@@ -18,28 +16,6 @@ class Linters < Prompter
     rescue => exception
       abort'Please enter a correct file name & re-launch the programme'
     end
-  end
-
-  def prompt_no_open_bracket
-    file = @selected_file.to_s
-    i = 1
-    File.readlines(file).each do |item|
-      line = "line #{i}: #{item} missing brackets"
-      if item.match?(/[.]/) == true && item.match?(/[.]?\{/) == false
-        puts line
-      end
-      i += 1
-    end
-  end
-  
-  def prompt_no_close_bracket
-    file = @selected_file.to_s
-    File.readlines(file).each_with_index do |item, index|
-      line = "Possible missing closing brackets, please check line: #{index + 1}"
-      if item.match?(/^\n/)
-        puts line
-      end
-    end 
   end
 
   def bracket_checker
@@ -53,10 +29,14 @@ class Linters < Prompter
     elsif open_bracket == close_bracket && !(total_brackets.zero?) && !(check_with_rule == total_brackets)
       prompt_message('failed')
       prompt_lint_error('missing_brackets')
+      prompt_no_open_bracket
+      prompt_no_close_bracket
       false
     elsif close_bracket != open_bracket
       prompt_message('failed')
       prompt_lint_error('missing_brackets')
+      prompt_no_open_bracket
+      prompt_no_close_bracket
       false
     elsif total_brackets.zero?
       prompt_message('failed')
@@ -64,6 +44,18 @@ class Linters < Prompter
       nil
     end
   end
+
+  # def prompt_empty_rule
+  #   f = file_read
+  #   indish_open = find_same_brackets('{')
+  #   indish_close = find_same_brackets('}')
+  #   f.each_line do |item, index|
+  #     if check_fill_or_not(indish_open, indish_close) == true
+  #       puts @empty_line
+  #     end
+
+  #   end
+  # end
 
   def empty_rule_checker
     indish_open = find_same_brackets('{')

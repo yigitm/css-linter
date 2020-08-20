@@ -5,9 +5,9 @@ require_relative '../lib/linters.rb'
 lint = Linters.new
 
 lint.prompt_welcome
-lint.prompt_no_close_bracket
-# lint.bracket_checker
-# lint.empty_rule_checker
+lint.prompt_empty_rule
+#  lint.bracket_checker
+#  lint.empty_rule_checker
 # lint.property_name_checker
 # lint.important_tag_checker
 # lint.dry_violation_checker
