@@ -1,11 +1,13 @@
 require_relative '../lib/prompter.rb'
+require 'colorize'
 class Linters < Prompter
   include Lintcss
-  attr_reader :indish_open, :indish_close, :empty_line, :dry_array, :stop_execution
+  attr_reader :indish_open, :indish_close, :checkpoints, :line_no, :dry_array, :stop_execution
   def initialize
     @indish_open = indish_open
     @indish_close = indish_close
-    @empty_line = empty_line
+    @checkpoints = checkpoints
+    @line_no = line_no
     @dry_array = dry_array
     @stop_execution = false
   end
@@ -45,17 +47,41 @@ class Linters < Prompter
     end
   end
 
-  # def prompt_empty_rule
-  #   f = file_read
-  #   indish_open = find_same_brackets('{')
-  #   indish_close = find_same_brackets('}')
-  #   f.each_line do |item, index|
-  #     if check_fill_or_not(indish_open, indish_close) == true
-  #       puts @empty_line
-  #     end
+  def line_checker
+    f = file_read
+    @checkpoints = []
+    @line_no = 0
+    f.each_line do |line|
+      if line.include?('.')
+        @checkpoints << 'c1'
+        @line_no += 1
+      elsif line.include?(';')
+        @checkpoints << 'c2'
+        counter = false
+        @line_no += 1
+      elsif line.include?('}')
+        @checkpoints << 'c3'
+        @line_no += 1
+      else
+        @checkpoints << line_no
+        @line_no += 1
+      end
+    end
+    prompt_empty_rule
+    print @checkpoints
+  end
 
-  #   end
-  # end
+  def prompt_empty_rule
+    if !(@checkpoints.length / 3 == @checkpoints.count('c2'))
+      @checkpoints.each_with_index do |item, index|
+        if item.eql?('c3')
+        puts "check line(s): #{index}"
+        end
+      end
+    end
+  end
+ 
+
 
   def empty_rule_checker
     indish_open = find_same_brackets('{')
@@ -64,6 +90,7 @@ class Linters < Prompter
     if message == true
       prompt_message('failed')
       prompt_lint_error('empty_rule')
+      line_checker
     else
       prompt_message('passed')
     end

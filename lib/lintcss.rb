@@ -29,7 +29,6 @@ module Lintcss
     l.times do
       if indish_close[i] - indish_open[i] <= 1
         i += 1
-        @empty-line = indish_close[i]
         return true
       elsif indish_close[i] - indish_open[i] >= 2
         i += 1
