@@ -122,13 +122,9 @@ class Prompter
   end
 
   def prompt_empty_rule
-    if !(@checkpoints.length / 3 == @checkpoints.count('c2'))
-      @checkpoints.each_with_index do |item, index|
-        if item.eql?('c3')
-        puts "check line(s): #{index}"
-        end
-      end
-    end
+    
+
+    
   end
 
   def prompt_stop_execute

@@ -2,12 +2,11 @@ require_relative '../lib/prompter.rb'
 require 'colorize'
 class Linters < Prompter
   include Lintcss
-  attr_reader :indish_open, :indish_close, :checkpoints, :line_no, :dry_array, :stop_execution
+  attr_reader :indish_open, :indish_close, :conditions, :dry_array, :stop_execution
   def initialize
     @indish_open = indish_open
     @indish_close = indish_close
-    @checkpoints = checkpoints
-    @line_no = line_no
+    @conditions = conditions
     @dry_array = dry_array
     @stop_execution = false
   end
@@ -26,6 +25,7 @@ class Linters < Prompter
     total_brackets = open_bracket + close_bracket
     check_with_rule = regex_scanner(/^.\w/).size * 2
     if open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule == total_brackets
+      print 'Bracket Check / '.green
       prompt_message('passed')
       true
     elsif open_bracket == close_bracket && !(total_brackets.zero?) && !(check_with_rule == total_brackets)
@@ -47,55 +47,42 @@ class Linters < Prompter
     end
   end
 
-  def line_checker
-    f = file_read
-    @checkpoints = []
-    @line_no = 0
-    f.each_line do |line|
-      if line.include?('.')
-        @checkpoints << 'c1'
-        @line_no += 1
-      elsif line.include?(';')
-        @checkpoints << 'c2'
-        counter = false
-        @line_no += 1
-      elsif line.include?('}')
-        @checkpoints << 'c3'
-        @line_no += 1
-      else
-        @checkpoints << line_no
-        @line_no += 1
-      end
-    end
-    prompt_empty_rule
-    print @checkpoints
-  end
-
-  def prompt_empty_rule
-    if !(@checkpoints.length / 3 == @checkpoints.count('c2'))
-      @checkpoints.each_with_index do |item, index|
-        if item.eql?('c3')
-        puts "check line(s): #{index}"
-        end
-      end
-    end
-  end
- 
-
-
   def empty_rule_checker
-    indish_open = find_same_brackets('{')
-    indish_close = find_same_brackets('}')
-    message = check_fill_or_not(indish_open, indish_close)
-    if message == true
-      prompt_message('failed')
-      prompt_lint_error('empty_rule')
-      line_checker
-    else
+    f = file_read
+    @conditions = []
+    counter = 1
+    index = 0
+    f.each_line do |line|
+      index += 1
+      if line.include?('.') && counter == 1
+        @conditions << 'passed-one'
+        counter = 2
+      elsif line.include?('.') && counter != 1
+        @conditions << 'passed-one'
+      elsif line.include?(';') && counter == 2
+        @conditions << 'passed-two'
+        counter = 1
+      elsif line.include?(';') && counter != 2
+        @conditions << 'passed-two'
+      elsif line.include?('}') && counter == 1
+        @conditions << 'passed-three'
+      elsif line.include?('}') && counter != 1
+        @conditions << 0
+        @conditions << 'passed-three'
+        counter = 1
+        prompt_message('failed')
+        prompt_lint_error('empty_rule')
+        puts "check line: #{index}"
+      else
+        @conditions << 'no-match'
+      end
+    end
+    if @conditions.none?(0)
+      print 'Emty Rule Check / '.green
       prompt_message('passed')
     end
   end
-
+ 
   def important_tag_checker
     count_important = file_read.scan('!important').size
     case count_important
