@@ -1,26 +1,32 @@
 require_relative '../lib/prompter.rb'
 require 'colorize'
 class Linters < Prompter
-  include Lintcss
-  attr_reader :indish_open, :indish_close, :conditions, :dry_array, :stop_execution
+  attr_accessor :selected_file, :conditions, :dry_array, :stop_execution
   def initialize
-    @indish_open = indish_open
-    @indish_close = indish_close
     @conditions = conditions
     @dry_array = dry_array
     @stop_execution = false
   end
+  
+  def which_default_file?(selected_file, file_list)
+     file_list.each do |file| 
+        if file_list.index(file).to_i == selected_file.to_i - 1
+          selected_file = file_list[selected_file.to_i - 1]
+        end
+    end
+    return 'test_files/'.concat(selected_file) 
+  end
 
-  def file_read
+  def file_read(file)
     begin
-      file_data = File.read(@selected_file.to_s)
+      file_data = File.read(file)
     rescue => exception
       abort'Please enter a correct file name & re-launch the programme'
     end
   end
   
-  def bracket_checker
-    f = file_read
+  def bracket_checker(selected_file)
+    f = file_read(selected_file)
     @conditions = []
     counter = 1
     index = 0
@@ -64,8 +70,8 @@ class Linters < Prompter
     end
   end
 
-  def empty_rule_checker
-    f = file_read
+  def empty_rule_checker(selected_file)
+    f = file_read(selected_file)
     @conditions = []
     counter = 1
     index = 0
@@ -100,8 +106,8 @@ class Linters < Prompter
     end
   end
  
-  def property_name_checker
-    f = file_read
+  def property_name_checker(selected_file)
+    f = file_read(selected_file)
     @conditions = []
     counter = 0
     index = 0
@@ -124,8 +130,8 @@ class Linters < Prompter
     end
   end
 
-  def important_tag_checker
-    f = file_read
+  def important_tag_checker(selected_file)
+    f = file_read(selected_file)
     @conditions = []
     counter = 0
     index = 0
@@ -146,13 +152,10 @@ class Linters < Prompter
     end
   end
 
-  def dry_violation_checker
-    dry_array = file_read.scan(/\S*\w*\s\W*\w*;/)
-    f = file_read
+  def dry_violation_checker(selected_file)
+    f = file_read(selected_file)
     @conditions = []
-    counter = 0
     index = 0
-    duplicate = []
     f.each_line do |line|
       if line.match?(/\S*\w*\s\W*\w*;/)
         @conditions << line
