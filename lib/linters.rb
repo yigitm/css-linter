@@ -18,32 +18,43 @@ class Linters < Prompter
       abort'Please enter a correct file name & re-launch the programme'
     end
   end
-
+  
   def bracket_checker
-    open_bracket = regex_scanner(/{/).count
-    close_bracket = regex_scanner(/}/).count
-    total_brackets = open_bracket + close_bracket
-    check_with_rule = regex_scanner(/^.\w/).size * 2
-    if open_bracket == close_bracket && !(total_brackets.zero?) && check_with_rule == total_brackets
-      print 'Bracket Check / '.green
+    f = file_read
+    @conditions = []
+    counter = 1
+    index = 0
+    f.each_line do |line|
+      index += 1
+      if line.include?('{')
+        @conditions << '{'
+        counter = 0
+      elsif line.include?('}')
+        @conditions << '}'
+        counter = 4
+      elsif counter == 1
+        @conditions << 'c1'
+        counter = 0
+        prompt_message('failed')
+        prompt_lint_error('missing_brackets')
+        puts "check line: #{index}".red
+      elsif counter == 2
+        @conditions << 'c2'
+        counter = 4
+        prompt_message('failed')
+        prompt_lint_error('missing_brackets')
+        puts "check line: #{index}".red
+      elsif counter == 0
+        @conditions << 0
+        counter = 2
+      elsif counter == 4
+        @conditions << 'no-match'
+        counter = 1 
+      end
+    end
+    if @conditions.none?('c1') && @conditions.none?('c2')
+      print 'Emty Rule Check / '.green
       prompt_message('passed')
-      true
-    elsif open_bracket == close_bracket && !(total_brackets.zero?) && !(check_with_rule == total_brackets)
-      prompt_message('failed')
-      prompt_lint_error('missing_brackets')
-      prompt_no_open_bracket
-      prompt_no_close_bracket
-      false
-    elsif close_bracket != open_bracket
-      prompt_message('failed')
-      prompt_lint_error('missing_brackets')
-      prompt_no_open_bracket
-      prompt_no_close_bracket
-      false
-    elsif total_brackets.zero?
-      prompt_message('failed')
-      prompt_lint_error('no_brackets')
-      nil
     end
   end
 
@@ -72,7 +83,7 @@ class Linters < Prompter
         counter = 1
         prompt_message('failed')
         prompt_lint_error('empty_rule')
-        puts "check line: #{index}"
+        puts "check line: #{index}".red
       else
         @conditions << 'no-match'
       end
