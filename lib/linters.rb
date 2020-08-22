@@ -148,12 +148,23 @@ class Linters < Prompter
 
   def dry_violation_checker
     dry_array = file_read.scan(/\S*\w*\s\W*\w*;/)
-
-    if dry_array == dry_array.uniq
-      prompt_message('passed')
-    else
-      prompt_message('warning')
-      prompt_lint_warning('dry_violation')
+    f = file_read
+    @conditions = []
+    counter = 0
+    index = 0
+    duplicate = []
+    f.each_line do |line|
+      if line.match?(/\S*\w*\s\W*\w*;/)
+        @conditions << line
+      end
+    end
+    f.each_line do |line|
+      index += 1
+      if @conditions.include?(line) && @conditions.count(line) >=2
+        prompt_message('warning')
+        prompt_lint_warning('dry_violation')
+        puts "Check for line: #{index} ".yellow
+      end
     end
   end
 end
