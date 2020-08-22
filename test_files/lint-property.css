@@ -1,8 +1,8 @@
 .some-title {
-  font-weight: lighter;
+  font-weight! lighter;
 }
 
 .some-other-title {
-  color: red;
+  color!red!
   font-weight: lighter;
 }

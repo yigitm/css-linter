@@ -9,12 +9,4 @@ module Lintcss
         end
     end
   end
-
-  def regex_scanner(regex_variable)
-    scanned_array = file_read.scan(regex_variable)
-  end
-
-  def find_length_difference(array_one, array_two)
-    result = array_one.length - array_two.length
-  end
 end

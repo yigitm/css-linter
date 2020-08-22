@@ -57,8 +57,11 @@ class Linters < Prompter
     if @conditions.none?('c1') && @conditions.none?('c2')
       print 'Bracket Check / '.green
       prompt_message('passed')
+    elsif @conditions.none?('{') && @conditions.none?('}')
+      puts 
+      prompt_message('failed')
+      prompt_lint_error('no_brackets')
     end
-    print @conditions
   end
 
   def empty_rule_checker
@@ -121,31 +124,31 @@ class Linters < Prompter
     end
   end
 
-  # def property_name_checker
-  #   # file_read
-  #   # dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
-  #   # property_array = regex_scanner(/\S*\w*:/)
-  #   # if find_length_difference(dry_array, property_array) != 0
-  #   #   prompt_message('failed')
-  #   #   prompt_lint_warning('property_name')
-  #   # elsif find_length_difference(dry_array, property_array).zero? == true
-  #   #   prompt_message('passed')
-  #   # end
-  #   f = file_read
-  #   @conditions = []
-  #   counter = 0
-  #   index = 0
-  #   f.each_line do |line|
-  #     index += 1
-  #     if line.include?('{')
-  #       counter = 0
-
-
-
-  #   end
-
-
-
-
-  # end
+  def property_name_checker
+    # file_read
+    # dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
+    # property_array = regex_scanner(/\S*\w*:/)
+    # if find_length_difference(dry_array, property_array) != 0
+    #   prompt_message('failed')
+    #   prompt_lint_warning('property_name')
+    # elsif find_length_difference(dry_array, property_array).zero? == true
+    #   prompt_message('passed')
+    # end
+    f = file_read
+    @conditions = []
+    counter = 0
+    index = 0
+    f.each_line do |line|
+      index += 1
+       if line.match?(/^+\s*\w/)
+         if !(line.match?(/:/))
+           puts "error #{index}".red
+         elsif !(line.match?(/;/))
+           puts "error #{index}".red
+         else 
+           puts "Passed".green 
+         end
+       end
+    end
+  end
 end

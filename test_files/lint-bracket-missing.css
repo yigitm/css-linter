@@ -1,17 +1,17 @@
-.some-title {
+.some-title (
   font-weight: lighter;
   font-weight: lighter;
-}
+)
 
 .some-title 
   font-weight: lighter;
-}
+)
 
-.some-title {
+.some-title (
   font-weight: lighter;
   font-weight: lighter;
-}
+)
 
-.some-title {
+.some-title (
   font-weight: lighter;
-}
+)
