@@ -100,16 +100,49 @@ class Linters < Prompter
     end
   end
  
+  def property_name_checker
+    f = file_read
+    @conditions = []
+    counter = 0
+    index = 0
+    f.each_line do |line|
+      index += 1
+       if line.match?(/^+\s*\w/)
+         if !(line.match?(/:/))
+           prompt_message('failed')
+           prompt_lint_error('property_name')
+           puts "Missing ':' check line: #{index}".red
+         elsif !(line.match?(/;/))
+           prompt_message('failed')
+           prompt_lint_error('property_name')
+           puts "Missing ';' check line: #{index}".red
+         else 
+           print "Property Name - line: #{index} / ".green
+           prompt_message('passed')
+         end
+       end
+    end
+  end
+
   def important_tag_checker
-    count_important = file_read.scan('!important').size
-    case count_important
-    when (0..9)
-      prompt_message('passed')
-    when (10..file_read.size)
+    f = file_read
+    @conditions = []
+    counter = 0
+    index = 0
+    f.each_line do |line|
+      index += 1
+      if line.match?('!important')
+        @conditions << index 
+      end
+    end
+    
+    if @conditions.length >= 10
       prompt_message('warning')
       prompt_lint_warning('!important')
+      @conditions.each {|index| puts "Over usage of '!important' tag - #{@conditions.length} / 9 limit - line: #{index}".red}
     else
-      false
+      print "!important Tag usage: - #{@conditions.length} / 9 limit / ".green
+      prompt_message('passed')
     end
   end
 
@@ -121,34 +154,6 @@ class Linters < Prompter
     else
       prompt_message('warning')
       prompt_lint_warning('dry_violation')
-    end
-  end
-
-  def property_name_checker
-    # file_read
-    # dry_array = regex_scanner(/\S*\w*\s\W*\w*;/)
-    # property_array = regex_scanner(/\S*\w*:/)
-    # if find_length_difference(dry_array, property_array) != 0
-    #   prompt_message('failed')
-    #   prompt_lint_warning('property_name')
-    # elsif find_length_difference(dry_array, property_array).zero? == true
-    #   prompt_message('passed')
-    # end
-    f = file_read
-    @conditions = []
-    counter = 0
-    index = 0
-    f.each_line do |line|
-      index += 1
-       if line.match?(/^+\s*\w/)
-         if !(line.match?(/:/))
-           puts "error #{index}".red
-         elsif !(line.match?(/;/))
-           puts "error #{index}".red
-         else 
-           puts "Passed".green 
-         end
-       end
     end
   end
 end
