@@ -33,11 +33,19 @@ loop do
   end
   break if valid == true
 end
-lint.bracket_checker(selected_file)
-lint.empty_rule_checker(selected_file)
-lint.property_name_checker(selected_file)
-lint.important_tag_checker(selected_file)
-lint.dry_violation_checker(selected_file)
+
+# lint.bracket_checker(selected_file)
+# lint.empty_rule_checker(selected_file)
+# lint.property_name_checker(selected_file)
+
+# lint.dry_violation_checker(selected_file)
+
+if lint.important_tag_checker(selected_file) == true
+      puts '!important Tag Check Status: Passed'.green
+else 
+      puts 'Check Status: Warning'.yellow
+      puts "Over usage of '!important' tag - Please check lines: #{lint.tag_lines}".yellow 
+end
 
 puts "\nThank you for your time & support\n".white
 print '|R|U|B|Y| '.red

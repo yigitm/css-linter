@@ -1,10 +1,9 @@
 require_relative '../lib/prompter.rb'
 require 'colorize'
 class Linters < Prompter
-  attr_accessor :selected_file, :conditions, :dry_array, :stop_execution
+  attr_accessor :selected_file, :conditions, :stop_execution
   def initialize
     @conditions = conditions
-    @dry_array = dry_array
     @stop_execution = false
   end
   
@@ -141,15 +140,8 @@ class Linters < Prompter
         @conditions << index 
       end
     end
-    
-    if @conditions.length >= 10
-      prompt_message('warning')
-      prompt_lint_warning('!important')
-      @conditions.each {|index| puts "Over usage of '!important' tag - #{@conditions.length} / 9 limit - line: #{index}".red}
-    else
-      print "!important Tag usage: - #{@conditions.length} / 9 limit / ".green
-      prompt_message('passed')
-    end
+
+    @conditions.length >= 10? false : true
   end
 
   def dry_violation_checker(selected_file)
