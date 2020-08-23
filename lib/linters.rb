@@ -24,6 +24,7 @@ class Linters < Prompter
     conditions = []
     counter = 1
     index = 0
+    missing_brackets = []
     f.each_line do |line|
       index += 1
       if line.include?('{')
@@ -35,17 +36,13 @@ class Linters < Prompter
       elsif counter == 1
         conditions << 'c1'
         counter = 0
-        prompt_message('failed')
-        prompt_lint_error('missing_brackets')
-        puts "check line: #{index}".red
+        missing_brackets << index
       elsif counter == 2 && line.match?(/\S/)
         conditions << 0
       elsif counter == 2
         conditions << 'c2'
         counter = 4
-        prompt_message('failed')
-        prompt_lint_error('missing_brackets')
-        puts "check line: #{index}".red
+        missing_brackets << index
       elsif counter == 0
         conditions << 0
         counter = 2
@@ -54,13 +51,13 @@ class Linters < Prompter
         counter = 1 
       end
     end
+
     if conditions.none?('c1') && conditions.none?('c2')
-      print 'Bracket Check / '.green
-      prompt_message('passed')
+      true
     elsif conditions.none?('{') && conditions.none?('}')
-      puts 
-      prompt_message('failed')
-      prompt_lint_error('no_brackets')
+      false
+    elsif !(missing_brackets.length.zero?)
+      missing_brackets.each {|item| item }
     end
   end
 

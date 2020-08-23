@@ -25,48 +25,56 @@ loop do
   elsif !(selected_file.match(/[1-6]/).nil?) && selected_file.size == 1
         valid = true
         selected_file = lint.which_default_file?(selected_file, file_list)
-        puts "processing default test file: #{selected_file}"
+        puts "processing default test file: #{selected_file}\n\n"
   elsif !(selected_file.match(/.css$/).nil?) && selected_file.size >= 4
         valid = true
         selected_file = 'test_files/'.concat(selected_file)
-        puts "processing your test file: #{selected_file}"
+        puts "processing your test file: #{selected_file}\n\n"
   end
   break if valid == true
 end
 
-# lint.bracket_checker(selected_file)
+if lint.bracket_checker(selected_file) == true
+      puts "Bracket Check Status: Passed\n".green
+elsif lint.bracket_checker(selected_file) == false
+      puts 'Bracket Check Status: Failed'.red
+      puts "No opening & closing curly brackets\n".red
+else  
+      puts 'Bracket Check Status: Failed'.red
+      puts 'Missing Curly Bracket(s)'.red
+      puts "Please check line(s): #{lint.bracket_checker(selected_file)}\n".red
+end
+
 lint.empty_rule_checker(selected_file)
 
 if lint.empty_rule_checker(selected_file).length.zero?
-  puts 'Emty Rule Check Status: Passed'.green
+  puts "Emty Rule Check Status: Passed\n".green
  else
-  puts 'Check Status: Failed'.red
-  puts 'Syntax error: Empty Rule'.red
-  puts "Please check line(s): #{lint.empty_rule_checker(selected_file)}".red
+  puts 'Empty Rule Check Status: Failed'.red
+  puts "Please check line(s): #{lint.empty_rule_checker(selected_file)}\n".red
 end
 
 lint.property_name_checker(selected_file)
 
   if !(lint.property_name_checker(selected_file).length.zero?)
-    puts 'Check Status: Failed'.red
-    puts 'Syntax error: Property Name'.red
-    puts "Please check line(s): #{lint.property_name_checker(selected_file)}".red
+    puts 'Property Name Check Status: Failed'.red
+    puts "Please check line(s): #{lint.property_name_checker(selected_file)}\n".red
   elsif lint.property_name_checker(selected_file).length.zero?
-    puts 'Property Name Check Status: Passed'.green
+    puts "Property Name Check Status: Passed\n".green
   end         
 
 if lint.dry_violation_checker(selected_file).length.zero?
-   puts 'DRY Check Status: Passed'.green
+   puts "DRY Check Status: Passed\n".green
  else
    puts 'Check Status: Warning - DRY violation'.yellow
-   puts "Check for line(s): #{lint.dry_violation_checker(selected_file)} ".yellow
+   puts "Check for line(s): #{lint.dry_violation_checker(selected_file)}\n".yellow
 end
 
 if lint.important_tag_checker(selected_file) == true
-      puts '!important Tag Check Status: Passed'.green
+      puts "!important Tag Check Status: Passed\n".green
  else 
       puts 'Check Status: Warning - !important tag recommended limit : 9'.yellow
-      puts "Over usage of '!important' tag - Please check lines: #{lint.important_tag_checker(selected_file)}".yellow 
+      puts "Over usage of '!important' tag - Please check lines: #{lint.important_tag_checker(selected_file)}\n".yellow 
 end
 
 puts "\nThank you for your time & support\n".white
