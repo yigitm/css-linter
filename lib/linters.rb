@@ -122,7 +122,9 @@ class Linters < Prompter
       end
     end
 
-    conditions.length >= 10? false : true
+    if conditions.length >= 10
+      conditions.each { |item| item }
+    end
   end
 
   def dry_violation_checker(selected_file)

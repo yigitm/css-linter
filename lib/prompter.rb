@@ -11,12 +11,6 @@ class Prompter
     @messages = ['Check Status: Passed', 'Check Status: Failed', 'Missing curly bracket(s)', 
     'No opening & closing curly brackets.']
   end
-  
-  def tag_lines
-    @conditions.each {|index| index }
-  end
-
- 
-  
+    
 end
 
