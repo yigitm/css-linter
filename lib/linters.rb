@@ -109,25 +109,16 @@ class Linters < Prompter
   def property_name_checker(selected_file)
     f = file_read(selected_file)
     @conditions = []
-    counter = 0
     index = 0
     f.each_line do |line|
       index += 1
        if line.match?(/^+\s*\w/)
-         if !(line.match?(/:/))
-           prompt_message('failed')
-           prompt_lint_error('property_name')
-           puts "Missing ':' check line: #{index}".red
-         elsif !(line.match?(/;/))
-           prompt_message('failed')
-           prompt_lint_error('property_name')
-           puts "Missing ';' check line: #{index}".red
-         else 
-           print "Property Name - line: #{index} / ".green
-           prompt_message('passed')
+         if !(line.match?(/:/)) || !(line.match?(/;/))
+           @conditions << index
          end
        end
     end
+    @conditions
   end
 
   def important_tag_checker(selected_file)
@@ -163,6 +154,6 @@ class Linters < Prompter
         @dry_count << index
       end
     end
-    return @dry_count
+    @dry_count
   end
 end

@@ -9,7 +9,7 @@ class Prompter
 
   def prompt_message(index_one, index_two = nil, index_three = nil)
     @messages = ['Check Status: Passed', 'Check Status: Failed', 'Missing curly bracket(s)', 
-    'No opening & closing curly brackets.', 'Empty Rule', 'Syntax error: Property Name']
+    'No opening & closing curly brackets.', 'Empty Rule']
   end
   
   def tag_lines

@@ -3,6 +3,6 @@
 }
 
 .some-other-title {
-  color!red!
+  color: red
   font-weight: lighter;
 }
