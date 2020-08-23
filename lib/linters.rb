@@ -75,6 +75,7 @@ class Linters < Prompter
     @conditions = []
     counter = 1
     index = 0
+    empty_rules = []
     f.each_line do |line|
       index += 1
       if line.include?('.') && counter == 1
@@ -90,20 +91,14 @@ class Linters < Prompter
       elsif line.include?('}') && counter == 1
         @conditions << 'passed-three'
       elsif line.include?('}') && counter != 1
-        @conditions << 0
+        empty_rules << index
         @conditions << 'passed-three'
         counter = 1
-        prompt_message('failed')
-        prompt_lint_error('empty_rule')
-        puts "check line: #{index}".red
       else
         @conditions << 'no-match'
       end
     end
-    if @conditions.none?(0)
-      print 'Emty Rule Check / '.green
-      prompt_message('passed')
-    end
+      empty_rules.each {|item| item }
   end
  
   def property_name_checker(selected_file)

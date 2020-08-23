@@ -35,13 +35,22 @@ loop do
 end
 
 # lint.bracket_checker(selected_file)
-# lint.empty_rule_checker(selected_file)
+lint.empty_rule_checker(selected_file)
+
+if lint.empty_rule_checker(selected_file).length.zero?
+  puts 'Emty Rule Check Status: Passed'.green
+ else
+  puts 'Check Status: Failed'.red
+  puts 'Syntax error: Empty Rule'.red
+  puts "Please check line(s): #{lint.empty_rule_checker(selected_file)}".red
+end
+
 lint.property_name_checker(selected_file)
 
   if !(lint.property_name_checker(selected_file).length.zero?)
     puts 'Check Status: Failed'.red
     puts 'Syntax error: Property Name'.red
-    puts "Please check lines: #{lint.property_name_checker(selected_file)}".red
+    puts "Please check line(s): #{lint.property_name_checker(selected_file)}".red
   elsif lint.property_name_checker(selected_file).length.zero?
     puts 'Property Name Check Status: Passed'.green
   end         
@@ -50,10 +59,10 @@ if lint.dry_violation_checker(selected_file).length.zero?
    puts 'DRY Check Status: Passed'.green
  else
    puts 'Check Status: Warning - DRY violation'.yellow
-   puts "Check for lines: #{lint.dry_violation_checker(selected_file)} ".yellow
+   puts "Check for line(s): #{lint.dry_violation_checker(selected_file)} ".yellow
 end
 
-if lint.important_tag_checker(selected_file) == trueß
+if lint.important_tag_checker(selected_file) == true
       puts '!important Tag Check Status: Passed'.green
  else 
       puts 'Check Status: Warning - !important tag recommended limit : 9'.yellow
