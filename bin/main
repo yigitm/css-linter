@@ -11,29 +11,31 @@ print '|-|'.green
 print "|L|I|N|T|E|R|\n".yellow
 print '+-+-+-+-+'.red
 print '+-+'.green
-print "+-+-+-+-+-+-+\n".yellow
+print "+-+-+-+-+-+-+\n\n\n".yellow
 
-file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css', 'lint-important.css', 'lint-dry.css', 'lint-property.css']
+file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css', 'lint-dry.css',
+             'lint-property.css']
 
-  puts "\n\nPlease type the name of your test file (your-file.css) or select any 'file_id' between '1 to 6' for linter check\n".white
-  file_list.each_with_index { |file, id| puts "#{id + 1}-#{file}\n" }
-  selected_file = gets.chomp
+puts 'Please type the name of your test file (your-file.css)'
+print "or select any 'file_id' between '1 to 6' for linter check".white
+file_list.each_with_index { |file, id| puts "#{id + 1}-#{file}\n" }
+selected_file = gets.chomp
 
-  if !selected_file.match?(/^[1-6]$|[.]css$/)
-    loop do
-      puts 'Invalid entry. Please type the full file name including ".css" extension or select a number between 1..6'
-      selected_file = gets.chomp
-      break if selected_file.match?(/^[1-6]$|[.]css$/)
-    end
+unless selected_file.match?(/^[1-6]$|[.]css$/)
+  loop do
+    puts 'Invalid entry. Please type the full file name including ".css" extension or select a number between 1..6'
+    selected_file = gets.chomp
+    break if selected_file.match?(/^[1-6]$|[.]css$/)
   end
-    
-  if selected_file.match?(/^[1-6]$/)
-    selected_file = lint.which_default_file?(selected_file, file_list)
-    puts "processing default test file: #{selected_file}\n\n"
-  elsif selected_file.match(/[.]css$/)
-    selected_file = 'test_files/'.concat(selected_file)
-    puts "processing your test file: #{selected_file}\n\n"
-  end
+end
+
+if selected_file.match?(/^[1-6]$/)
+  selected_file = lint.which_default_file?(selected_file, file_list)
+  puts "processing default test file: #{selected_file}\n\n"
+elsif selected_file.match(/[.]css$/)
+  selected_file = 'test_files/'.concat(selected_file)
+  puts "processing your test file: #{selected_file}\n\n"
+end
 
 if lint.bracket_checker(selected_file) == true
   puts "Bracket Check Status: Passed\n".green
@@ -57,7 +59,7 @@ end
 
 lint.property_name_checker(selected_file)
 
-if !(lint.property_name_checker(selected_file).length.zero?)
+if !lint.property_name_checker(selected_file).length.zero?
   puts 'Property Name Check Status: Failed'.red
   puts "Please check line(s): #{lint.property_name_checker(selected_file)}\n".red
 elsif lint.property_name_checker(selected_file).length.zero?
