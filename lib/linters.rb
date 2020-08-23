@@ -1,24 +1,19 @@
 require_relative '../lib/prompter.rb'
 require 'colorize'
 class Linters < Prompter
-  
   def which_default_file?(selected_file, file_list)
-     file_list.each do |file| 
-        if file_list.index(file).to_i == selected_file.to_i - 1
-          selected_file = file_list[selected_file.to_i - 1]
-        end
+    file_list.each do |file|
+      selected_file = file_list[selected_file.to_i - 1] if file_list.index(file).to_i == selected_file.to_i - 1
     end
-    return 'test_files/'.concat(selected_file) 
+    'test_files/'.concat(selected_file)
   end
 
   def file_read(file)
-    begin
-      file_data = File.read(file)
-    rescue => exception
-      abort'Please enter a correct file name & re-launch the programme'
-    end
+    File.read(file)
+  rescue StandardError
+    abort 'Please enter a correct file name & re-launch the programme'
   end
-  
+
   def bracket_checker(selected_file)
     f = file_read(selected_file)
     conditions = []
@@ -43,12 +38,12 @@ class Linters < Prompter
         conditions << 'c2'
         counter = 4
         missing_brackets << index
-      elsif counter == 0
+      elsif counter.zero?
         conditions << 0
         counter = 2
       elsif counter == 4
         conditions << 'no-match'
-        counter = 1 
+        counter = 1
       end
     end
 
@@ -56,8 +51,8 @@ class Linters < Prompter
       true
     elsif conditions.none?('{') && conditions.none?('}')
       false
-    elsif !(missing_brackets.length.zero?)
-      missing_brackets.each {|item| item }
+    elsif !missing_brackets.length.zero?
+      missing_brackets.each { |item| item }
     end
   end
 
@@ -89,20 +84,18 @@ class Linters < Prompter
         conditions << 'no-match'
       end
     end
-      empty_rules.each {|item| item }
+    empty_rules.each { |item| item }
   end
- 
+
   def property_name_checker(selected_file)
     f = file_read(selected_file)
     conditions = []
     index = 0
     f.each_line do |line|
       index += 1
-       if line.match?(/^+\s*\w/)
-         if !(line.match?(/:/)) || !(line.match?(/;/))
-           conditions << index
-         end
-       end
+      if line.match?(/^+\s*\w/)
+        conditions << index if !line.match?(/:/) || !line.match?(/;/)
+      end
     end
     conditions
   end
@@ -110,18 +103,13 @@ class Linters < Prompter
   def important_tag_checker(selected_file)
     f = file_read(selected_file)
     conditions = []
-    counter = 0
     index = 0
     f.each_line do |line|
       index += 1
-      if line.match?('!important')
-        conditions << index 
-      end
+      conditions << index if line.match?('!important')
     end
 
-    if conditions.length >= 10
-      conditions.each { |item| item }
-    end
+    conditions.each { |item| item } unless conditions.length <= 9
   end
 
   def dry_violation_checker(selected_file)
@@ -129,18 +117,13 @@ class Linters < Prompter
     dry_count = []
     conditions = []
     index = 0
-    counter = []
     f.each_line do |line|
-      if line.match?(/\S*\w*\s\W*\w*;/)
-        conditions << line
-      end
+      conditions << line if line.match?(/\S*\w*\s\W*\w*;/)
     end
 
     f.each_line do |line|
       index += 1
-      if conditions.include?(line) && conditions.count(line) >=2
-        dry_count << index
-      end
+      dry_count << index if conditions.include?(line) && conditions.count(line) >= 2
     end
     dry_count
   end
