@@ -1,9 +1,10 @@
 require_relative '../lib/prompter.rb'
 require 'colorize'
 class Linters < Prompter
-  attr_accessor :selected_file, :conditions, :stop_execution
+  attr_accessor :conditions, :dry_count, :stop_execution
   def initialize
     @conditions = conditions
+    @dry_count = dry_count
     @stop_execution = false
   end
   
@@ -146,20 +147,22 @@ class Linters < Prompter
 
   def dry_violation_checker(selected_file)
     f = file_read(selected_file)
+    @dry_count = []
     @conditions = []
     index = 0
+    counter = []
     f.each_line do |line|
       if line.match?(/\S*\w*\s\W*\w*;/)
         @conditions << line
       end
     end
+
     f.each_line do |line|
       index += 1
       if @conditions.include?(line) && @conditions.count(line) >=2
-        prompt_message('warning')
-        prompt_lint_warning('dry_violation')
-        puts "Check for line: #{index} ".yellow
+        @dry_count << index
       end
     end
+    return @dry_count
   end
 end

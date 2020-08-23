@@ -38,12 +38,18 @@ end
 # lint.empty_rule_checker(selected_file)
 # lint.property_name_checker(selected_file)
 
-# lint.dry_violation_checker(selected_file)
+
+if lint.dry_violation_checker(selected_file).length.zero?
+   puts 'DRY Check Status: Passed'.green
+ else
+   puts 'Check Status: Warning - DRY violation'.yellow
+   puts "Check for line: #{lint.dry_violation_checker(selected_file)} ".yellow
+end
 
 if lint.important_tag_checker(selected_file) == true
       puts '!important Tag Check Status: Passed'.green
 else 
-      puts 'Check Status: Warning'.yellow
+      puts 'Check Status: Warning - !important tag recommended limit : 9'.yellow
       puts "Over usage of '!important' tag - Please check lines: #{lint.tag_lines}".yellow 
 end
 
