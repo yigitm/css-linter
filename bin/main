@@ -14,7 +14,7 @@ print '+-+'.green
 print "+-+-+-+-+-+-+\n\n\n".yellow
 
 file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css', 'lint-dry.css',
-             'lint-property.css']
+             'lint-important.css', 'lint-property.css']
 
 puts 'Please type the name of your test file (your-file.css)'
 print "or select any 'file_id' between '1 to 6' for linter check".white
@@ -48,16 +48,12 @@ else
   puts "Please check line(s): #{lint.bracket_checker(selected_file)}\n".red
 end
 
-lint.empty_rule_checker(selected_file)
-
 if lint.empty_rule_checker(selected_file).length.zero?
-  puts "Emty Rule Check Status: Passed\n".green
+  puts "Empty Rule Check Status: Passed\n".green
 else
   puts 'Empty Rule Check Status: Failed'.red
-  puts "Please check line(s): #{lint.empty_rule_checker(selected_file)}\n".red
+  puts "Please check line(s): #{p lint.empty_rule_checker(selected_file)}\n".red
 end
-
-lint.property_name_checker(selected_file)
 
 if !lint.property_name_checker(selected_file).length.zero?
   puts 'Property Name Check Status: Failed'.red

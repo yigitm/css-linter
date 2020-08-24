@@ -52,39 +52,25 @@ class Linters < Prompter
     elsif conditions.none?('{') && conditions.none?('}')
       false
     elsif !missing_brackets.length.zero?
-      missing_brackets.each { |item| item }
+      missing_brackets
     end
   end
 
   def empty_rule_checker(selected_file)
     f = file_read(selected_file)
-    conditions = []
     counter = 1
     index = 0
     empty_rules = []
     f.each_line do |line|
       index += 1
-      if line.include?('.') && counter == 1
-        conditions << 'passed-one'
-        counter = 2
-      elsif line.include?('.') && counter != 1
-        conditions << 'passed-one'
-      elsif line.include?(';') && counter == 2
-        conditions << 'passed-two'
-        counter = 1
-      elsif line.include?(';') && counter != 2
-        conditions << 'passed-two'
-      elsif line.include?('}') && counter == 1
-        conditions << 'passed-three'
-      elsif line.include?('}') && counter != 1
+      counter = 2 if line.include?('.') && counter == 1
+      counter = 1 if line.include?(';') && counter == 2
+      if line.include?('}') && counter != 1
         empty_rules << index
-        conditions << 'passed-three'
         counter = 1
-      else
-        conditions << 'no-match'
       end
     end
-    empty_rules.each { |item| item }
+    empty_rules
   end
 
   def property_name_checker(selected_file)
@@ -109,7 +95,7 @@ class Linters < Prompter
       conditions << index if line.match?('!important')
     end
 
-    conditions.each { |item| item } unless conditions.length <= 9
+    conditions unless conditions.length <= 9
   end
 
   def dry_violation_checker(selected_file)
