@@ -1,59 +1,22 @@
-require_relative '../lib/prompter.rb'
+require_relative '../lib/lint_private.rb'
 require 'colorize'
-class Linters < Prompter
-  def which_default_file?(selected_file, file_list)
-    file_list.each do |file|
-      selected_file = file_list[selected_file.to_i - 1] if file_list.index(file).to_i == selected_file.to_i - 1
-    end
-    'test_files/'.concat(selected_file)
-  end
-
-  def file_read(file)
-    File.read(file)
-  rescue StandardError
-    abort 'Please enter a correct file name & re-launch the programme'
-  end
-
+class Linters < LintPrivate
   def bracket_checker(selected_file)
-    f = file_read(selected_file)
-    conditions = []
+    file = file_read(selected_file)
+    open_one = []
+    close_one = []
     counter = 1
-    index = 0
-    missing_brackets = []
-    f.each_line do |line|
-      index += 1
+    line_no = 0
+    i = 0
+    file.each_line do |line|
+      i += 1
       if line.include?('{')
-        conditions << '{'
-        counter = 0
+        open_one << i
       elsif line.include?('}')
-        conditions << '}'
-        counter = 4
-      elsif counter == 1
-        conditions << 'c1'
-        counter = 0
-        missing_brackets << index
-      elsif counter == 2 && line.match?(/\S/)
-        conditions << 0
-      elsif counter == 2
-        conditions << 'c2'
-        counter = 4
-        missing_brackets << index
-      elsif counter.zero?
-        conditions << 0
-        counter = 2
-      elsif counter == 4
-        conditions << 'no-match'
-        counter = 1
+        close_one << i
       end
     end
-
-    if conditions.none?('c1') && conditions.none?('c2')
-      true
-    elsif conditions.none?('{') && conditions.none?('}')
-      false
-    elsif !missing_brackets.length.zero?
-      missing_brackets
-    end
+    bracket_condition_check(open_one, close_one, file, counter, line_no)
   end
 
   def empty_rule_checker(selected_file)

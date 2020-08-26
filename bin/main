@@ -2,7 +2,6 @@
 require_relative '../lib/linters.rb'
 require 'colorize'
 lint = Linters.new
-
 print '+-+-+-+-+'.red
 print '+-+'.green
 print "+-+-+-+-+-+-+\n".yellow
@@ -42,7 +41,7 @@ if lint.bracket_checker(selected_file) == true
 elsif lint.bracket_checker(selected_file) == false
   puts 'Bracket Check Status: Failed'.red
   puts "No opening & closing curly brackets\n".red
-else
+elsif lint.bracket_checker(selected_file)
   puts 'Bracket Check Status: Failed'.red
   puts 'Missing Curly Bracket(s)'.red
   puts "Please check line(s): #{lint.bracket_checker(selected_file)}\n".red
@@ -52,7 +51,7 @@ if lint.empty_rule_checker(selected_file).length.zero?
   puts "Empty Rule Check Status: Passed\n".green
 else
   puts 'Empty Rule Check Status: Failed'.red
-  puts "Please check line(s): #{p lint.empty_rule_checker(selected_file)}\n".red
+  puts "Please check line(s): #{lint.empty_rule_checker(selected_file)}\n".red
 end
 
 if !lint.property_name_checker(selected_file).length.zero?
