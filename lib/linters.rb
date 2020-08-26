@@ -1,6 +1,13 @@
 require_relative '../lib/lint_private.rb'
 require 'colorize'
 class Linters < LintPrivate
+  def which_default_file?(selected_file, file_list)
+    file_list.each do |file|
+      selected_file = file_list[selected_file.to_i - 1] if file_list.index(file).to_i == selected_file.to_i - 1
+    end
+    'test_files/'.concat(selected_file)
+  end
+  
   def bracket_checker(selected_file)
     file = file_read(selected_file)
     open_one = []

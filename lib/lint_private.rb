@@ -1,13 +1,7 @@
 require_relative '../lib/linters.rb'
 require 'colorize'
 class LintPrivate
-  def which_default_file?(selected_file, file_list)
-    file_list.each do |file|
-      selected_file = file_list[selected_file.to_i - 1] if file_list.index(file).to_i == selected_file.to_i - 1
-    end
-    'test_files/'.concat(selected_file)
-  end
-
+  private
   def file_read(file)
     File.read(file)
   rescue StandardError
