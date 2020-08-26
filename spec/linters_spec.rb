@@ -1,95 +1,107 @@
-require_relative '../lib/lintcss.rb'
 require_relative '../lib/linters.rb'
+require_relative '../lib/lint_private.rb'
 
-describe Linters < Prompter do
+describe Linters < LintPrivate do
   let(:lint) { Linters.new }
-  describe '#bracket_checker' do
-    context 'Checks total brakects number if matchs sum is even & not zero' do
-      it "Should return 'passed' message" do
-        expect(lint.bracket_checker).to eq(@passed)
+  let(:selected_file) { '' }
+  let(:file_list) do
+  end
+  describe '#which_default_file?' do
+    context 'checks the file list and match with the user selection' do
+      it "should return the concat version of the file by adding 'test_files/' to string value" do
+        file_list = ['no-bracket.css', 'missing-bracket.css']
+        selected_file = 'no-bracket.css'
+        expect(lint.which_default_file?(selected_file, file_list)).to eq('test_files/'.concat(selected_file))
       end
     end
+  end
 
-    context 'Checks total brakects number if matchs sum is odd & not zero' do
-      it "Should return 'failed' & 'missing_brackets' message" do
-        expect(lint.bracket_checker).to eq(@failed)
-        expect(lint.bracket_checker).to eq(@missing_brackets)
+  describe '#bracket checker' do
+    context 'Checks total brakect number if sum is not zero & both bracket numbers are equal' do
+      it 'Should return TRUE' do
+        selected_file = 'test_files/user_file.css'
+        expect(lint.bracket_checker(selected_file)).to eq(true)
       end
     end
+  end
 
-    context 'Checks total brakects number if no matches found' do
-      it "Should return 'failed' & 'no_brackets' message" do
-        expect(lint.bracket_checker).to eq(@failed)
-        expect(lint.bracket_checker).to eq(@no_brackets)
+  describe '#bracket checker' do
+    context 'Checks brakect number if sum is zero' do
+      it 'Should return FALSE' do
+        selected_file = 'test_files/no-bracket.css'
+        expect(lint.bracket_checker(selected_file)).to_not be(true)
       end
     end
+  end
 
-    context 'Checks the first & last regexes and matched pairs/(even numbers)' do
-      context 'If first & last regex conditions are true but matchs sum is odd/(not pairs)' do
-        it "Should return 'failed' & 'missing_brackets' message" do
-          expect(lint.bracket_checker).to eq(@failed)
-          expect(lint.bracket_checker).to eq(@missing_brackets)
-        end
+  describe '#bracket checker' do
+    context 'Checks brakect number if any opening or closing one is missing' do
+      it 'Should return an array which contains the missing bracket(s) line number' do
+        selected_file = 'test_files/missing-bracket.css'
+        expect(lint.bracket_checker(selected_file)).to eq([1, 6, 10, 13, 15, 17])
+      end
+    end
+  end
+
+  describe '#bracket checker' do
+    context 'Checks brakect number if any opening or closing one is missing' do
+      it 'Should return an array which contains the missing bracket(s) line number' do
+        selected_file = 'test_files/missing-bracket.css'
+        expect(lint.bracket_checker(selected_file)).to_not eq([10])
       end
     end
   end
 
   describe '#empty_rule_checker' do
-    context 'Checks content between openning & closing brackets and if content is empty' do
-      it "It should returns 'failed' & 'empty_rule' message" do
-        expect(lint.empty_rule_checker).to eq(@failed)
-        expect(lint.empty_rule_checker).to eq(@empty_rule)
-      end
-    end
-
-    context 'Checks content between openning & closing brackets and if content is NOT empty' do
-      it "It should returns 'passed' message" do
-        expect(lint.empty_rule_checker).to eq(@passed)
+    context 'Checks content between opening & closing brackets and if content is empty' do
+      selected_file = 'test_files/empty-rule.css'
+      it 'It should returns an array which includes empty_rules line number(s)' do
+        expect(lint.empty_rule_checker(selected_file)).to eq([2])
       end
     end
   end
 
-  describe '#important_tag_checker' do
-    context 'Checks the count of !important tag & if count is MORE than 10' do
-      it "It should returns a warning message 'Over usage of '!important' - Recommended Limit: 9'" do
-        expect(lint.important_tag_checker).to eq(@failed)
-        expect(lint.important_tag_checker).to eq(@important_tag)
-      end
-    end
-
-    context 'Checks the count of !important tag & if count is LESS than 10' do
-      it "It should returns 'passed' message" do
-        expect(lint.important_tag_checker).to eq(@passed)
-      end
-    end
-  end
-
-  describe '#dry_violation_checker' do
-    context 'Checks the all property names If any duplicates are find' do
-      it "It should returns 'failed' & 'DRY violation' message" do
-        expect(lint.dry_violation_checker).to eq(@warning)
-        expect(lint.dry_violation_checker).to eq(@dry_violation)
-      end
-    end
-
-    context 'If NO duplicates are find' do
-      it "It should returns 'passed' message" do
-        expect(lint.dry_violation_checker).to eq(@passed)
+  describe '#empty_rule_checker' do
+    context 'Checks content between opening & closing brackets and if content is empty' do
+      selected_file = 'test_files/empty-rule.css'
+      it 'It should returns an array which includes empty_rules line number(s)' do
+        expect(lint.empty_rule_checker(selected_file)).to_not eq([])
       end
     end
   end
 
   describe '#property_name_checker' do
-    context 'Checks the all colon(s) & semi-colon(s) in property names and if any missing' do
-      it "It should returns 'failed' & 'Syntax error: Property Name' message" do
-        expect(lint.property_name_checker).to eq(@failed)
-        expect(lint.property_name_checker).to eq(@missing_semicolon)
+    context 'Checks property name for missing colon & semicolons' do
+      selected_file = 'test_files/property.css'
+      it 'It should return an array that contains error line number(s)' do
+        expect(lint.property_name_checker(selected_file)).to eq([2, 6])
       end
     end
+  end
 
-    context 'If colon(s) & semi-colon(s) syntax is correct' do
-      it "It should returns 'passed' message" do
-        expect(lint.property_name_checker).to eq(@passed)
+  describe '#property_name_checker' do
+    context 'Checks property name for missing colon & semicolons' do
+      selected_file = 'test_files/property.css'
+      it 'It should return an array that contains error line number(s)' do
+        expect(lint.property_name_checker(selected_file)).to_not eq([0])
+      end
+    end
+  end
+
+  describe '#dry_violation_checker' do
+    context 'Checks property names if any DRY violation is find' do
+      selected_file = 'test_files/dry.css'
+      it 'It should return an array that contains error line number(s)' do
+        expect(lint.dry_violation_checker(selected_file)).to eq([2, 7])
+      end
+    end
+  end
+
+  describe '#dry_violation_checker' do
+    context 'Checks property names if any DRY violation is find' do
+      selected_file = 'test_files/dry.css'
+      it 'It should return an array that contains error line number(s)' do
+        expect(lint.dry_violation_checker(selected_file)).to_not eq([7])
       end
     end
   end

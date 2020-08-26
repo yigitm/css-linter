@@ -12,8 +12,8 @@ print '+-+-+-+-+'.red
 print '+-+'.green
 print "+-+-+-+-+-+-+\n\n\n".yellow
 
-file_list = ['lint-bracket-no.css', 'lint-bracket-missing.css', 'lint-empty-rule.css', 'lint-dry.css',
-             'lint-important.css', 'lint-property.css']
+file_list = ['no-bracket.css', 'missing-bracket.css', 'empty-rule.css', 'dry.css',
+             'important.css', 'property.css']
 
 puts 'Please type the name of your test file (your-file.css)'
 print "or select any 'file_id' between '1 to 6' for linter check".white

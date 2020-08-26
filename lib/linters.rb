@@ -7,7 +7,7 @@ class Linters < LintPrivate
     end
     'test_files/'.concat(selected_file)
   end
-  
+
   def bracket_checker(selected_file)
     file = file_read(selected_file)
     open_one = []
@@ -64,7 +64,6 @@ class Linters < LintPrivate
       index += 1
       conditions << index if line.match?('!important')
     end
-
     conditions unless conditions.length <= 9
   end
 

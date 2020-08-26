@@ -2,6 +2,7 @@ require_relative '../lib/linters.rb'
 require 'colorize'
 class LintPrivate
   private
+
   def file_read(file)
     File.read(file)
   rescue StandardError
