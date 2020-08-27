@@ -16,13 +16,13 @@ file_list = ['no-bracket.css', 'missing-bracket.css', 'empty-rule.css', 'dry.css
              'important.css', 'property.css']
 
 puts 'Please type the name of your test file (your-file.css)'
-print "or select any 'file_id' between '1 to 6' for linter check".white
-file_list.each_with_index { |file, id| puts "#{id + 1}-#{file}\n" }
+print "or select any 'file_id' between '1 to 6' for linter check\n\n".cyan
+file_list.each_with_index { |file, id| puts "#{id + 1}-#{file}\n".cyan }
 selected_file = gets.chomp
 
 unless selected_file.match?(/^[1-6]$|[.]css$/)
   loop do
-    puts 'Invalid entry. Please type the full file name including ".css" extension or select a number between 1..6'
+    puts "Invalid entry. Please type the full file name including '.css' extension or select a number between 1..6"
     selected_file = gets.chomp
     break if selected_file.match?(/^[1-6]$|[.]css$/)
   end
@@ -75,7 +75,7 @@ else
   puts "Over usage of '!important' tag - Please check lines: #{lint.important_tag_checker(selected_file)}\n".yellow
 end
 
-puts "\nThank you for your time & support\n".white
+puts "\nThank you for your time & support\n".cyan
 print '|R|U|B|Y| '.red
 print '|L|I|N|T|E|R| '.yellow
 abort 'ending...'
