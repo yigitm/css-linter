@@ -29,7 +29,7 @@ This project consists of building a simple CSS linter focusing on Ruby's best pr
 
 # Live Version:
 
-Without installing locally, you can run the live version:
+Without installing it to your local machine, you can run the live version:
 
 [![Run on Repl.it](https://repl.it/badge/github/yigitm/css-linter)](https://repl.it/@YigitMersin/CSS-Linter#bin/main.rb)
 
