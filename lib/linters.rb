@@ -25,7 +25,6 @@ class Linters < LintPrivate
     bracket_condition_check(selected_file, open_one, close_one, counter, line_no)
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
   def empty_rule_checker(selected_file)
     counter = 1
     index = 0
@@ -41,7 +40,6 @@ class Linters < LintPrivate
     end
     empty_rules
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
 
   def property_name_checker(selected_file)
     conditions = []
@@ -62,7 +60,12 @@ class Linters < LintPrivate
       index += 1
       conditions << index if line.match?('!important')
     end
-    conditions unless conditions.length <= 9
+
+    if conditions.length <= 9
+      true
+    else
+      conditions
+    end
   end
 
   def dry_violation_checker(selected_file)
