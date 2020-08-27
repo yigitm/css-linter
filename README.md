@@ -7,17 +7,18 @@
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
 <p align="center">
-  <img src="https://www.perforce.com/sites/default/files/image/2019-03/image-blog-linting-important-use-lint-tools.png" style="height: 12em; width: 100%"; alt="RuboCop Logo"/>
+  <img src="https://www.perforce.com/sites/default/files/image/2019-03/image-blog-linting-important-use-lint-tools.png" style="height: 10em; width: 100%"; alt="RuboCop Logo"/>
 </p>
 
 ---
 
 ## 🧐 About
 
-<h3 align="center">
-This project consists of building a simple CSS linter focusing on Ruby's best practices by checking the Linter cases based on some common mistakes that almost every beginner developer experienced.</h3>
+This is a simple CSS linter that focusing on Ruby's some best practices by checking the Linter cases based on some common mistakes that almost every beginner developer experienced.
 
 ---
+
+![CSS Linter](/image/gif.gif)
 
 # 🔧 Built with
 
@@ -35,7 +36,7 @@ Without installing it to your local machine, you can run the live version:
 
 If you wish to test your own css file, please follow below 'Installing' instructions.
 
-# 🛠 Install <a name ="installing"></a>
+# 🛠 Install
 
 #### Step - 1
 
