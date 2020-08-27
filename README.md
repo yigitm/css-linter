@@ -1,6 +1,7 @@
 # CSS-Linters
 
-[![Status](https://img.shields.io/badge/status-active-success.svg)]()
+[![Run on Repl.it](https://repl.it/badge/github/yigitm/css-linter)](https://repl.it/@YigitMersin/CSS-Linter#bin/main.rb)
+
 [![Github Issues](https://img.shields.io/badge/GitHub-Issues-orange)](https://github.com/yigitm/css-linter/issues)
 [![GitHub2 Pull Requests](https://img.shields.io/badge/GitHub-Pull%20Requests-blue)](https://github.com/yigitm/ruby-linter/pulls)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
@@ -28,7 +29,9 @@ This project consists of building a simple CSS linter focusing on Ruby's best pr
 
 # Live Version:
 
-Without installing it locally; you can see live version from [here](https://rubyonrails.org/)
+Without installing locally, you can run the live version:
+
+[![Run on Repl.it](https://repl.it/badge/github/yigitm/css-linter)](https://repl.it/@YigitMersin/CSS-Linter#bin/main.rb)
 
 If you wish to test your own css file, please follow below 'Installing' instructions.
 
