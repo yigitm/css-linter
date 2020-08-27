@@ -9,19 +9,19 @@ class LintPrivate
     abort 'Please enter a correct file name & re-launch the programme'
   end
 
-  def bracket_condition_check(open_one, close_one, counter, line_no)
+  def bracket_condition_check(selected_file, open_one, close_one, counter, line_no)
     if open_one.length == close_one.length && !(open_one + close_one).length.zero?
       true
     elsif (open_one + close_one).length.zero?
       false
     elsif open_one.length != close_one.length
-      missing_bracket_checker(counter, line_no)
+      missing_bracket_checker(selected_file, counter, line_no)
     end
   end
 
   # rubocop:disable Metrics/PerceivedComplexity
   # rubocop:disable Metrics/CyclomaticComplexity
-  def missing_bracket_checker(counter, line_no)
+  def missing_bracket_checker(selected_file, counter, line_no)
     missing_brackets = []
     file_read(selected_file).each_line do |line|
       line_no += 1

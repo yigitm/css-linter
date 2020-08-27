@@ -22,7 +22,7 @@ class Linters < LintPrivate
         close_one << i
       end
     end
-    bracket_condition_check(open_one, close_one, counter, line_no)
+    bracket_condition_check(selected_file, open_one, close_one, counter, line_no)
   end
 
   def empty_rule_checker(selected_file)
