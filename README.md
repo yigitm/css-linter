@@ -16,7 +16,7 @@
 
 This is a simple CSS linter that focusing on Ruby's some best practices by checking the Linter cases based on some common mistakes that almost every beginner developer experienced.
 
-Users can test their own css by adding their css file to test-files folder after install it to thier local machine.
+Users can test their own css by adding their css file to "test_files" folder and after installing it to thier local machine, they can use the application from their terminal.
 
 ---
 
@@ -78,7 +78,19 @@ Type in the following command to run the linter on a test file
 ruby bin/main.rb
 ```
 
-# Testing
+# Testing for your own CSS file
+
+For testing your own css file after installing it to your local machine,please add your file to test_files folder and run the application from the terminal with;
+
+```
+cd path_to_your_folder
+```
+
+Programme console will prompt you to type your file name in: "file.css" format.
+
+![Console](images/console.png)
+
+# Testing for Code
 
 Test class methods using RSpec by running the command in your root directory
 
