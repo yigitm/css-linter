@@ -19,28 +19,30 @@ class LintPrivate
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def missing_bracket_checker(selected_file, counter, line_no)
     missing_brackets = []
     file_read(selected_file).each_line do |line|
       line_no += 1
-      if counter == 1 && line.include?('{') || counter == 2 && !line.match?(/(\S|})/)
-        case counter
-        when 1
-          counter = 0
-          missing_brackets << line_no
-        when 2
-          counter = 4
-          missing_brackets << line_no
-        else            
-          if counter.zero?
-            counter = 2
-          elsif counter == 4
-            counter = 1
-          end
-        end
+      if line.include?('{')
+        counter = 0
+      elsif line.include?('}')
+        counter = 4
+      elsif counter == 1
+        counter = 0
+        missing_brackets << line_no
+      elsif counter == 2 && !line.match?(/\S/)
+        counter = 4
+        missing_brackets << line_no
+      elsif counter.zero?
+        counter = 2
+      elsif counter == 4
+        counter = 1
       end
-      missing_brackets
     end
-    
+    missing_brackets
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end

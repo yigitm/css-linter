@@ -16,6 +16,8 @@
 
 This is a simple CSS linter that focusing on Ruby's some best practices by checking the Linter cases based on some common mistakes that almost every beginner developer experienced.
 
+Users can test their own css by adding their css file to test-files folder after install it to thier local machine.
+
 ---
 
 ![CSS Linter](/image/gif.gif)
