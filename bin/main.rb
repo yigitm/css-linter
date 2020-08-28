@@ -68,9 +68,9 @@ else
   puts "Check for line(s): #{lint.dry_violation_checker(selected_file)}\n".yellow
 end
 
-if lint.important_tag_checker(selected_file) == true
+if lint.important_tag_checker(selected_file).length <= 9
   puts "!important Tag Check Status: Passed\n".green
-else
+elsif lint.important_tag_checker(selected_file).length >= 10
   puts 'Check Status: Warning - !important tag recommended limit : 9'.yellow
   puts "Over usage of '!important' tag - Please check lines: #{lint.important_tag_checker(selected_file)}\n".yellow
 end

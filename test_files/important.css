@@ -1,5 +1,5 @@
 .some-title {
-  font-weight: lighter !important;
+  color: red !important;
 }
 
 .some-other-title {
@@ -35,8 +35,8 @@
 }
 
 .some-other-title {
-  color: red !important;
   font-weight: lighter;
+  color: red !important;
 }
 
 .some-other-title {

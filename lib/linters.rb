@@ -60,14 +60,9 @@ class Linters < LintPrivate
     index = 0
     file_read(selected_file).each_line do |line|
       index += 1
-      conditions << index if line.match?('!important')
+      conditions << index if line.include?('!important')
     end
-
-    if conditions.length <= 9
-      true
-    else
-      conditions
-    end
+    conditions
   end
 
   def dry_violation_checker(selected_file)
