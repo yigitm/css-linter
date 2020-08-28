@@ -62,10 +62,10 @@ cd css-linter
 
 #### Step - 3
 
-In order to install the gem files _(necessary third party files for execution of the programme)_ . Please type below command:
+In order to run the gem files _(necessary third party files for execution of the programme)_ . Please type below command:
 
 ```
-gem install colorize
+run bundle install
 ```
 
 ##### Step - 4
