@@ -6,9 +6,7 @@
 [![GitHub2 Pull Requests](https://img.shields.io/badge/GitHub-Pull%20Requests-blue)](https://github.com/yigitm/ruby-linter/pulls)
 [![License: GPL v3](https://img.shields.io/badge/License-GPLv3-blue.svg)](https://www.gnu.org/licenses/gpl-3.0)
 
-<p align="center">
-  <img src="https://www.perforce.com/sites/default/files/image/2019-03/image-blog-linting-important-use-lint-tools.png" style="height: 10em; width: 100%"; alt="RuboCop Logo"/>
-</p>
+![Alt Text](https://github.com/yigitm/css-linter/blob/master/images/css_linter.gif)
 
 ---
 
