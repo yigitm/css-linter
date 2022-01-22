@@ -18,8 +18,6 @@ Users can test their own css by adding their css file to "test_files" folder and
 
 ---
 
-![CSS Linter](/image/gif.gif)
-
 # 🔧 Built with
 
 - [Ruby](https://rubyonrails.org/)
